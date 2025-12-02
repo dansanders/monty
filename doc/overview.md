@@ -110,7 +110,7 @@ current module.
 
 ### Tuples
 
-> 📝 Note: parenthesis are usually optional around tuples.
+> 📝 Note: parentheses are usually optional around tuples.
 
 ```monty
 fn div_rem(a: Int, b: Int) Int, Int:
