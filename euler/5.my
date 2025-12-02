@@ -1,0 +1,27 @@
+## Problem 5: Smallest Multiple
+
+use std.math
+
+fn solve(N: Int) Int:
+    1.up_to(N).lcm()
+
+fn solve2(N: Int) Int:
+    use pkg.lib.sieve.primes
+
+    # TODO: Only need to check for higher powers below sqrt(N) == 4.
+    fn prime_powers() Iter[Int]:
+        for p in primes(N):
+            var a, b = p, p**2
+            while b <= N:
+                a, b = b, b * p
+            yield a
+
+    prime_powers().product()
+
+test example:
+    expect solve(10) == 2_520
+
+@manual
+test solution:
+    expect solve(20) == 232_792_560
+

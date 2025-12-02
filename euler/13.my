@@ -1,0 +1,14 @@
+## Problem 13: Large Sum
+
+use pkg.lib.decimal
+use std.math
+
+let _data = embed("data/13.txt")
+
+fn solve(data: Bytes, N: Int) Int:
+    let total = data.lines().map(Decimal.parse_or_panic).sum()
+    (total >> (total.len() - N)).int_or_panic()
+
+@manual
+test solution:
+    expect solve(_data, 10) == 5_537_376_230

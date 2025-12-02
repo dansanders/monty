@@ -1,0 +1,22 @@
+## Problem 7: 10_001st Prime
+
+use std.bit_array
+use std.math
+
+fn solve(N: Int) Int:
+    # TODO: Fix upper bound for N < 6.
+    let upper_bound = (N * (ln(N) + ln(ln(N)))).as_int_or_panic()
+    let composite = BitArray.zeros(upper_bound + 1)
+    var p = 2
+    for _ in 0.up_to(N - 2):
+        for m in (p**2).up_to(upper_bound, p):
+            composite[m] = 1
+        p = composite.find_or_panic(0, p + 1)
+    p
+
+test example:
+    expect solve(6) == 13
+
+@manual
+test solution:
+    expect solve(10_001) == 104_743

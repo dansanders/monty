@@ -1,0 +1,13 @@
+## Problem 15: Lattice Paths
+
+use std.math
+
+fn solve(N: Int) Int:
+    binomial(2 * N, N)
+
+test example:
+    expect solve(2) == 6
+
+@manual
+test solution:
+    expect solve(20) == 137_846_528_820

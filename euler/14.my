@@ -1,0 +1,25 @@
+## Problem 14: Longest Collatz Sequence
+
+use std.math
+
+fn solve(N: Int) Int:
+    # TODO: Can this be rewritten as an array initialization?
+    # TODO: Consider fusing arg_max() with computation.
+    let chain_lengths = array[Int, N](0)
+    for n in 2.to(N - 1):
+        if 2.divides(n):
+            chain_lengths[n] = chain_lengths[n / 2] + 1
+        else:
+            var t = n
+            var steps = 0
+            while t >= n:
+                t = 3*t + 1
+                let even_steps = t.ctz()
+                t = t.shr(even_steps)
+                steps += 1 + even_steps
+            chain_lengths[n] = chain_lengths[t] + steps
+    chain_lengths.arg_max()
+
+@manual
+test solution:
+    expect solve(1_000_000) == 837_799

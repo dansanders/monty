@@ -1,0 +1,23 @@
+## Problem 10: Summation of Primes
+
+use std.bit_array
+use std.math
+
+fn solve(N: Int) Int:
+    fn primes() Iter[Int]:
+        let composite = BitArray.zeros(N)
+        var q = 2
+        while composite.find(0, q) is Some(p):
+            yield p
+            for m in (p**2).up_to(N - 1, p):
+                composite[m] = 1
+            q = p + 1
+
+    primes().sum()
+
+test example:
+    expect solve(10) == 17
+
+@manual
+test solution:
+    expect solve(2_000_000) == 142_913_828_922

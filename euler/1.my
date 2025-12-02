@@ -1,0 +1,19 @@
+## Problem 1: Multiples of 3 or 5
+
+use std.math
+
+fn triangle(n: Int) Int:
+    n * (n + 1) / 2
+
+fn solve(N: Int) Int:
+    fn sum_multiples(n: Int) Int:
+        n * triangle((N - 1) / n)
+
+    sum_multiples(3) + sum_multiples(5) - sum_multiples(lcm(3, 5))
+
+test example:
+    expect solve(10) == 23
+
+@manual
+test solution:
+    expect solve(1_000) == 233_168

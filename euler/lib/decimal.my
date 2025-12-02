@@ -1,0 +1,88 @@
+"""Problem 13: Large Sum"""
+
+use std.math
+
+@opaque
+struct Decimal:
+    digits: FrozenList[Int8]
+
+impl Decimal:
+    @static
+    @implicit
+    fn from(value: Int) Self:
+        # TODO: Implement sign.
+        expect value >= 0
+
+        var result_digits = List[Int8].empty()
+        while value:
+            value, var digit = value.div_mod(10)
+            result_digits.append(digit)
+
+        Self(result_digits.into_frozen_list())
+
+    @static
+    fn zero() Self:
+        Self(FrozenList[Int8].empty())
+
+    @static
+    fn try_parse(digits: Bytes) Self?:
+        var result_digits = List[Int8].empty()
+        for byte in digits.lstrip('0').rev():
+            result_digits.append(Int8.parse(byte)?)
+
+        Some(Self(result_digits.into_frozen_list()))
+
+    @static
+    fn parse_or_panic(digits: Bytes) Self:
+        Self.try_parse(digits).value_or_panic()
+
+    @static
+    fn add(a: Self, b: Self) Self:
+        var a = a.digits
+        var b = b.digits
+        if a.len() < b.len():
+            a, b = b, a
+
+        var result_digits = List[Int8].empty()
+        var carry = 0_i8
+        for i in 0.up_to(b.len() - 1):
+            var total = a[i] + b[i] + carry
+            # TODO: Explicit comparison rather than division, if the compiler
+            # isn't smart enough.
+            carry, var digit = total.div_mod(10)
+            result_digits.append(digit)
+
+        for i in b.len().up_to(a.len() - 1):
+            var total = a[i] + carry
+            carry, var digit = total.div_mod(10)
+            result_digits.append(digit)
+
+        if carry:
+            expect carry == 1_i8
+            result_digits.append(carry)
+
+        Self(result_digits.into_frozen_list())
+
+    @static
+    fn shr(a: Self, b: Int) Self:
+        # TODO: Should negative shifts be supported?
+        expect b >= 0
+
+        # TODO: Handle large shifts.
+        Self(a.digits.slice(b))
+
+    fn as_bool() Bool:
+        return self.digits.len()
+
+    fn len() Int:
+        self.digits.len()
+
+    fn try_as_int() Int?:
+        var result = 0
+        for digit in self.digits.rev():
+            # TODO: Is it faster to compare the value up front?
+            result = 10.check_mul(result)?.check_add(digit)?
+        Some(result)
+
+    fn as_int_or_panic() Int:
+        self.try_as_int().value_or_panic()

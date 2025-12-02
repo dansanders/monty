@@ -1,0 +1,21 @@
+## Problem 2: Even Fibonacci Numbers
+
+use std.math
+
+# A099919
+# TODO: There is a closed formula.
+fn solve(N: Int) Int:
+    fn even_fibonacci() Iter[Int]:
+        var a, b = 0, 2
+        while b <= N:
+            yield b
+            a, b = b, a + 4*b
+
+    even_fibonacci().sum()
+
+test example:
+    expect solve(89) == 2 + 8 + 34
+
+@manual
+test solution:
+    expect solve(4_000_000) == 4_613_732

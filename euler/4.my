@@ -1,0 +1,31 @@
+## Problem 4: Largest Palindrome Product
+
+use std.math
+
+fn even_palindrome(var prefix: Int) Int:
+    test usage:
+        expect even_palindrome(123) == 123_321
+
+    var result = prefix
+    while prefix:
+        prefix, var digit = prefix.div_rem(10)
+        result = 10*result + digit
+    result
+
+fn solve(N: Int) Int:
+    let min_n_digit = 10**(N - 1)
+    let max_n_digit = 10**N - 1
+    for prefix in max_n_digit.down_to(min_n_digit):
+        let p = even_palindrome(prefix)
+        let min_factor = p.ceil_div(max_n_digit)
+        let max_factor = max_n_digit
+        for factor in min_factor.align_up(11).up_to(max_factor, 11):
+            if factor.divides(p):
+                return p
+
+test example:
+    expect solve(2) == 9_009
+
+@manual
+test solution:
+    expect solve(3) == 906_609

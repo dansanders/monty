@@ -1,0 +1,26 @@
+## Problem 12: Highly Divisible Triangular Number
+
+use std.math
+
+use pkg.lib.sieve.divisor_count
+
+fn divide_even(n: Int) Int:
+    match 2.divides(n):
+        true => n / 2
+        false => n
+
+fn solve(N: Int) Int:
+    # TODO: Initialize our own sieve instance?
+    var b = divisor_count(1)
+    for n in count(1):
+        let a = b
+        b = divisor_count(divide_even(n + 1))
+        if a * b > N:
+            return n * (n + 1) / 2
+
+test example:
+    expect solve(5) == 28
+
+@manual
+test solution:
+    expect solve(500) == 76_576_500
