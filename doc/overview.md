@@ -55,12 +55,12 @@ struct ListNode[T]:
     value: T
 
 struct LinkedList[T]:
-    var head: ListNode[T]?
+    var head: ListNode[T]? = None
 
     @static
     fn empty() -> Self:
-        LinkedList(None)
-    
+        Self()
+
     fn push_front(value: T) -> Void:
         self.head = ListNode(self.head, value)
 

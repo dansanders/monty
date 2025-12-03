@@ -28,8 +28,8 @@ struct _try_process_helper[T: Try]:
     fn iter() -> Iter[T.Output]:
         for value in it:
             match value.as_try_result():
-                Output(v):
+                Output(v) =>
                     yield v
-                Residual(r):
+                Residual(r) =>
                     self.residual = Some(r)
                     return
