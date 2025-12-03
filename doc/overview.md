@@ -109,8 +109,13 @@ Attributes:
 Constructor syntax is used to create instances of types, and to pattern match
 those types. Constructors cannot be overridden.
 
+> 📝 Note: these examples all use tuple structs, which are structs with no
+> named fields. Struct fields can be named and have default values.
+
 ```monty
-struct Foo(bar: Int, baz: Int)
+struct Foo:
+    Int
+    Int
 
 fn main() -> Void:
     let foo = Foo(1, 2)
@@ -253,7 +258,7 @@ fn main() -> Void:
 ```monty
 enum Foo:
     Bar(Int)
-    Baz(a: Int, b: Int)
+    Baz(Int, Int)
 
 fn main() -> Void:
     let x = Foo.Bar(5)
@@ -316,11 +321,13 @@ fn foo(bar: Fn[Int -> Int]) -> Int:
 fn baz() -> Void:
     let a = 10
 
-    fn add_a(b: Int) -> Int:
+    fn add_a_1(b: Int) -> Int:
         a + b
 
-    print(foo(add_a))           # prints "15"
-    print(foo(|b: Int| a + b))  # also prints "15"
+    let add_a_2 = |b: Int| a + b
+
+    print(foo(add_a_1))  # prints "15"
+    print(foo(add_a_2))  # prints "15"
 ```
 
 ## Hopeful Features
