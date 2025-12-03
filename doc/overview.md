@@ -57,7 +57,6 @@ struct ListNode[T]:
 struct LinkedList[T]:
     var head: ListNode[T]?
 
-impl[T] LinkedList[T]:
     @static
     fn empty() -> Self:
         LinkedList(None)
@@ -141,16 +140,16 @@ fn main() -> Void:
 ### Operator Overloading
 
 ```monty
-impl BigInt:
-    # ...
+struct MyInt:
+    Int
 
     @static
     fn add(a: Self, b: Self) -> Self:
-        todo
+        Self(a.0 + b.0)
 
 fn main() -> Void:
-    let a = BigInt.from(5)
-    let b = a + a
+    let a, b = MyInt(5), MyInt(10)
+    print(a + b)  # prints "MyInt(15)"
 ```
 
 ### Implicit Conversion
@@ -158,37 +157,40 @@ fn main() -> Void:
 Types may opt-in to automatic, infallible conversions.
 
 ```monty
-impl BigInt:
-    # ...
+struct MyInt:
+    Int
 
     @static
     @implicit
     fn from(value: Int) -> Self:
         todo
 
+    @static
+    fn add(a: Self, b: Self) -> Self:
+        Self(a.0 + b.0)
+
 fn main() -> Void:
-    let a: BigInt = 5
-    let b = 10 + a
+    let a: MyInt = 5
+    print(a + 10)  # prints "MyInt(15)"
 ```
 
 ### Duck Typing
 
 ```monty
-struct MyInt(Int)
+struct MyInt:
+    Int
 
-impl MyInt:
-    fn as_int() -> Int:
-        self.0
+    fn double() -> Self:
+        Self(2 * self.0)
 
-trait AsInt:
-    fn as_int() -> Int
+trait MyTrait:
+    fn double() -> Self
 
-fn foo(a: AsInt) -> Void:
-    print(a.as_int())
+fn foo(a: MyTrait) -> Void:
+    print(a.double())
 
 fn main() -> Void:
-    let i = MyInt(5)
-    foo(i)
+    foo(MyInt(5))  # prints "10"
 ```
 
 ### Equality
@@ -196,9 +198,9 @@ fn main() -> Void:
 > 📝 Note: partial equality is implemented by `fn try_eq() Bool?`.
 
 ```monty
-struct MyInt(Int)
+struct MyInt:
+    Int
 
-impl MyInt:
     @static
     fn eq(a: Self, b: Self) -> Bool:
         a.0 == b.0
@@ -216,9 +218,9 @@ fn main() -> Void:
 > 📝 Note: partial order is implemented by `fn try_cmp() Ord?`.
 
 ```monty
-struct MyInt(Int)
+struct MyInt:
+    Int
 
-impl MyInt:
     @static
     fn cmp(a: Self, b: Self) -> Ord:
         match:

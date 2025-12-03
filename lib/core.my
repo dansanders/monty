@@ -2,11 +2,6 @@
 trait Iter[T]:
     fn next() -> T?
 
-    # Default implementation means that the function is not required to match
-    # the trait, but also that the signature must match if it does exist.
-    fn try_len() -> Int?:
-        None
-
 trait RevIter[T]:
     fn next_back() -> T?
 
@@ -18,7 +13,6 @@ use internal.raw_list
 struct List[T]:
     RawList[T]
 
-impl[T] List[T]:
     @static
     fn from(it: Iter[T]) -> Self:
         todo

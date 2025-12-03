@@ -6,7 +6,6 @@ use std.math
 struct Decimal:
     digits: FrozenList[Int8]
 
-impl Decimal:
     @static
     @implicit
     fn from(value: Int) -> Self:

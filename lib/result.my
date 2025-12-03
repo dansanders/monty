@@ -3,24 +3,27 @@ enum Result[V, E]:
     Ok(V)
     Err(E)
 
-impl[V, W] V ? E:
     # TODO: This seems like a test, but it needs syntax.
     implements Try[V, E]
 
     type WithTryOutput[W] = W ? E
 
-    fn from_output(output: V) -> Self => Self.Ok(output)
+    fn from_output(output: V) -> Self:
+        Self.Ok(output)
 
-    fn from_residual(residual: E) -> Self => Self.Err(residual)
+    fn from_residual(residual: E) -> Self:
+        Self.Err(residual)
 
     fn as_try_result() -> TryResult[V, E]:
         match self:
             Ok(v) => Output(v)
             Err(e) => Residual(e)
 
-    fn is_ok() -> Bool => self is Ok(_)
+    fn is_ok() -> Bool:
+        self is Ok(_)
 
-    fn map[W](f: Fn[V -> W]) -> W ? E => Ok(f(self?))
+    fn map[W](f: Fn[V -> W]) -> W ? E:
+        Ok(f(self?))
 
     fn inspect(f: Fn[V -> Void]) -> Self:
         if self is Ok(v):
@@ -45,30 +48,34 @@ impl[V, W] V ? E:
             Ok(v) => v
             Err(e) => panic("$(msg): $(e:?)")
 
-impl[V, E] (V ? E) ? E:
-    fn flatten() -> V ? E => t?
+impl V, E -> (V ? E) ? E:
+    fn flatten() -> V ? E:
+        t?
 
 enum Option[V]:
     Some(V)
     None
 
-impl[V] V?:
     implements Try[V, Void]
 
     type WithTryOutput[W] = W?
 
-    fn from_output(output: V) -> Self => Some(output)
+    fn from_output(output: V) -> Self:
+        Some(output)
 
-    fn from_residual(residual: Void) -> Self => None
+    fn from_residual(residual: Void) -> Self:
+        None
 
     fn as_try_result() -> TryResult[V, Void]:
         match self:
             Some(v) => Output(v)
             None => Residual(Void)
 
-    fn is_some() -> Bool => self is Some(_)
+    fn is_some() -> Bool:
+        self is Some(_)
 
-    fn map[V -> W](f: Fn[V -> W]) -> W? => Some(f(self?))
+    fn map[V -> W](f: Fn[V -> W]) -> W?:
+        Some(f(self?))
 
     fn inspect(f: Fn[V ->]) -> Self:
         if self is Some(v):
@@ -105,7 +112,7 @@ impl[V] V?:
             None, Some(v) => Some(v)
             _ => None
 
-impl[V, E] (V ? E)?:
+impl V, E -> (V ? E)?:
     # TODO: Is `V? ? E` acceptable?
     fn transpose() -> (V?) ? E:
         match self:
@@ -113,7 +120,7 @@ impl[V, E] (V ? E)?:
             Some(Err(e)) => Err(e)
             None => Ok(None)
 
-impl[V, E] (V?) ? E:
+impl V, E -> (V?) ? E:
     fn transpose() -> (V ? E)?:
         match self:
             Ok(Some(v)) => Some(Ok(v))
