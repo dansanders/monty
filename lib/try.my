@@ -6,7 +6,7 @@ trait Try[V, R]:
     # TODO: This type is optional, `?` works without it. Probably checked_int
     # can't implement it.
     # TODO: This is a comptime function. Does that work?
-    type WithOutputType[W]: Try[W, R]
+    type WithTryOutput[W]: Try[W, R]
 
     @static
     fn from_output(output: V) Self
@@ -16,7 +16,7 @@ trait Try[V, R]:
 
     fn as_try_result() TryResult[V, R]
 
-fn try_process[V, R, T: Try[V, R], S](it: Iter[T], f: Fn[Iter[V] -> S]) T.WithOutputType[S]:
+fn try_process[V, R, T: Try[V, R], S](it: Iter[T], f: Fn[Iter[V] -> S]) T.WithTryOutput[S]:
     helper = _try_process_helper(it)
     result = f(helper.iter())
     match helper.residual:
@@ -31,7 +31,8 @@ impl[R, T: Try[_, R]] _try_process_helper[R, T]
     fn iter() Iter[V]:
         for value in it:
             match value.as_try_result():
-                Output(v) => yield v
-                Residual(r) =>
+                Output(v):
+                    yield v
+                Residual(r):
                     self.residual = Some(r)
                     return

@@ -1,14 +1,14 @@
 # Iteration
 trait Iter[T]:
-    fn next() T?
+    fn next() -> T?
 
     # Default implementation means that the function is not required to match
     # the trait, but also that the signature must match if it does exist.
-    fn try_len() Int?:
+    fn try_len() -> Int?:
         None
 
 trait RevIter[T]:
-    fn next_back() T?
+    fn next_back() -> T?
 
 trait DoubleEndedIter[T] = Iter[T] + RevIter[T]
 
@@ -20,17 +20,17 @@ struct List[T]:
 
 impl[T] List[T]:
     @static
-    fn from(it: Iter[T]) Self:
+    fn from(it: Iter[T]) -> Self:
         todo
 
     @static
-    fn empty() Self:
+    fn empty() -> Self:
         Self(RawList[T].empty())
 
-    fn as_bool() Bool:
+    fn as_bool() -> Bool:
         self.0.len()
 
-    fn as_iter() Iter[T]:
+    fn as_iter() -> Iter[T]:
         var i = 0
         while i < self.0.len():
             yield self.0.unsafe_index_unchecked(i)
@@ -38,31 +38,31 @@ impl[T] List[T]:
 
 trait FromIter[T]:
     @static
-    fn from(it: Iter[T]) Self
+    fn from(it: Iter[T]) -> Self
 
-fn collect[V -> C: FromIter[V]](it: Iter[V]) C:
+fn collect[V -> C: FromIter[V]](it: Iter[V]) -> C:
     C.from(it)
 
-fn try_collect[V, T: Try[V] -> C: FromIter[V]](it: Iter[V]) T.WithOutputType[C]:
+fn try_collect[V, T: Try[V] -> C: FromIter[V]](it: Iter[V]) -> T.WithTryOutput[C]:
     it.try_process(|i: Iter[V]| it.collect[C]())
 
 # Numbers
 trait Zero:
     @static
-    fn zero() Self
+    fn zero() -> Self
 
 # TODO: AddAssign[V] is a special trait that may be fulfilled by
 # `add_assign(V) Void`, or by a mutable binding that is
 # `Add[V, Result: Self]`.
 # TODO: Can checked_int be written checked[int]?
 # Checked sum is it.sum[checked_int]().
-fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) Acc:
+fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
     var result = Acc.zero()
     for value in it:
         result += value
     result
 
-fn try_sum[V, T: Try[V] -> Acc: Zero + AddAssign[V] = V](it: Iter[T]) T.WithOutputType[Acc]:
+fn try_sum[V, T: Try[V] -> Acc: Zero + AddAssign[V] = V](it: Iter[T]) -> T.WithTryOutput[Acc]:
     it.try_process(|i: Iter[V]| i.sum[Acc]())
 
 # Strings
@@ -75,21 +75,21 @@ trait Empty:
 # TODO: This version is only for mutable types. Should that be part of the
 # name/signatue? Is control over Acc necessary?
 # TODO: Write some examples of use.
-fn join[V -> Acc: Empty + AddAssign[V] = V](it: Iter[V]) Acc:
+fn join[V -> Acc: Empty + AddAssign[V] = V](it: Iter[V]) -> Acc:
     var result = Acc.empty()
     for value in it:
         result += value
     result
 
-fn try_join[V, T: Try[V] -> Acc: Empty + AddAssign[V] = V](it: Iter[T]) T.WithOutputType[Acc]:
+fn try_join[V, T: Try[V] -> Acc: Empty + AddAssign[V] = V](it: Iter[T]) -> T.WithOutputType[Acc]:
     it.try_process(|i: Iter[V]| i.join[Acc]())
 
 # TODO: Overload priority.
 # TODO: Precalculate storage.
 # TODO: Other immutable types also need an intermediate buffer. Can this
 # pattern be generalized?
-fn join(it: Iter[Str]) Str:
+fn join(it: Iter[Str]) -> Str:
     StrBuf.from(it).into_str()
 
-fn try_join[T: Try[Str]](it: Iter[T]) T:
+fn try_join[T: Try[Str]](it: Iter[T]) -> T:
     it.try_process(|i: Iter[Str]| i.join())

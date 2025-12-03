@@ -4,12 +4,12 @@ use std.math
 
 use pkg.lib.sieve.divisor_count
 
-fn divide_even(n: Int) Int:
+fn divide_even(n: Int) -> Int:
     match 2.divides(n):
         true => n / 2
         false => n
 
-fn solve(N: Int) Int:
+fn solve(N: Int) -> Int:
     # TODO: Initialize our own sieve instance?
     var b = divisor_count(1)
     for n in count(1):

@@ -2,7 +2,7 @@
 
 use std.math
 
-fn solve(N: Int) Int:
+fn solve(N: Int) -> Int:
     binomial(2 * N, N)
 
 test example:

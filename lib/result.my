@@ -4,53 +4,49 @@ enum Result[V, E]:
     Err(E)
 
 impl[V, W] V ? E:
+    # TODO: This seems like a test, but it needs syntax.
     implements Try[V, E]
 
-    type WithOutputType[W] = W ? E
+    type WithTryOutput[W] = W ? E
 
-    fn from_output(output: V) Self:
-        Self.Ok(output)
+    fn from_output(output: V) -> Self => Self.Ok(output)
 
-    fn from_residual(residual: E) Self:
-        Self.Err(residual)
+    fn from_residual(residual: E) -> Self => Self.Err(residual)
 
-    fn as_try_result() TryResult[V, E]:
+    fn as_try_result() -> TryResult[V, E]:
         match self:
             Ok(v) => Output(v)
             Err(e) => Residual(e)
 
-    fn is_ok() Bool:
-        self is Ok(_)
+    fn is_ok() -> Bool => self is Ok(_)
 
-    fn map[W](f: Fn[V -> W]) W ? E:
-        Ok(f(self?))
+    fn map[W](f: Fn[V -> W]) -> W ? E => Ok(f(self?))
 
-    fn inspect(f: Fn[V ->]) Self:
+    fn inspect(f: Fn[V -> Void]) -> Self:
         if self is Ok(v):
             f(v)
         self
 
     # TODO: Should this just be `iter()`?
     # Logic against: `into_iter()` makes sense.
-    fn as_iter() Iter[V]:
+    fn as_iter() -> Iter[V]:
         if self is Ok(v):
             yield v
 
-    fn value_or(default: V) V:
+    fn value_or(default: V) -> V:
         match self:
             Ok(v) => v
             _ => default
 
     # TODO: Use the caller location in the panic message.
     # TODO: What msg type to accept? String view? Template string?
-    fn value_or_panic(msg: str = "unexpected Err") V:
+    fn value_or_panic(msg: str = "unexpected Err") -> V:
         match self:
             Ok(v) => v
             Err(e) => panic("$(msg): $(e:?)")
 
 impl[V, E] (V ? E) ? E:
-    fn flatten() V ? E:
-        t?
+    fn flatten() -> V ? E => t?
 
 enum Option[V]:
     Some(V)
@@ -59,55 +55,51 @@ enum Option[V]:
 impl[V] V?:
     implements Try[V, Void]
 
-    type WithOutputType[W] = W?
+    type WithTryOutput[W] = W?
 
-    fn from_output(output: V) Self:
-        Self.Some(output)
+    fn from_output(output: V) -> Self => Some(output)
 
-    fn from_residual(residual: Void) Self:
-        Self.None
+    fn from_residual(residual: Void) -> Self => None
 
-    fn as_try_result() TryResult[V, Void]:
+    fn as_try_result() -> TryResult[V, Void]:
         match self:
             Some(v) => Output(v)
             None => Residual(Void)
 
-    fn is_some() Bool:
-        self is Some(_)
+    fn is_some() -> Bool => self is Some(_)
 
-    fn map[V -> W](f: Fn[V -> W]) W?:
-        Some(f(self?))
+    fn map[V -> W](f: Fn[V -> W]) -> W? => Some(f(self?))
 
-    fn inspect(f: Fn[V ->]) Self:
+    fn inspect(f: Fn[V ->]) -> Self:
         if self is Some(v):
             f(v)
         self
 
-    fn as_iter() Iter[V]:
+    fn as_iter() -> Iter[V]:
         if self is Some(v):
             yield v
 
-    fn value_or(default: V) V:
+    fn value_or(default: V) -> V:
         match self:
             Some(v) => v
             _ => default
 
-    fn value_or_panic(msg: str = "unexpected None") V:
+    fn value_or_panic(msg: str = "unexpected None") -> V:
         match self:
             Some(v) => v
             _ => panic(msg)
 
-    fn filter(f: Fn[V -> Bool]) V?:
+    fn filter(f: Fn[V -> Bool]) -> V?:
         match self:
             Some(v) if f(v) => Some(v)
             _ => None
 
-    fn zip[U](other: U?) (T, U)?:
+    fn zip[U](other: U?) -> (T, U)?:
         match self, other:
             Some(v), Some(w) => Some((v, w))
             _ => None
 
-    fn xor(other: V?) V?:
+    fn xor(other: V?) -> V?:
         match self, other:
             Some(v), None => Some(v)
             None, Some(v) => Some(v)
@@ -115,14 +107,14 @@ impl[V] V?:
 
 impl[V, E] (V ? E)?:
     # TODO: Is `V? ? E` acceptable?
-    fn transpose() (V?) ? E:
+    fn transpose() -> (V?) ? E:
         match self:
             Some(Ok(v)) => Ok(Some(v))
             Some(Err(e)) => Err(e)
             None => Ok(None)
 
 impl[V, E] (V?) ? E:
-    fn transpose() (V ? E)?:
+    fn transpose() -> (V ? E)?:
         match self:
             Ok(Some(v)) => Some(Ok(v))
             Ok(None) => None

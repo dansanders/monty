@@ -2,7 +2,7 @@
 
 use std.math
 
-fn even_palindrome(var prefix: Int) Int:
+fn even_palindrome(var prefix: Int) -> Int:
     test usage:
         expect even_palindrome(123) == 123_321
 
@@ -12,7 +12,7 @@ fn even_palindrome(var prefix: Int) Int:
         result = 10*result + digit
     result
 
-fn solve(N: Int) Int:
+fn solve(N: Int) -> Int:
     let min_n_digit = 10**(N - 1)
     let max_n_digit = 10**N - 1
     for prefix in max_n_digit.down_to(min_n_digit):

@@ -3,7 +3,7 @@
 use std.bit_array
 use std.math
 
-fn solve(N: Int) Int:
+fn solve(N: Int) -> Int:
     # TODO: Fix upper bound for N < 6.
     let upper_bound = (N * (ln(N) + ln(ln(N)))).as_int_or_panic()
     let composite = BitArray.zeros(upper_bound + 1)

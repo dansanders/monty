@@ -1,12 +1,12 @@
 ## Problem 6: Sum Square Difference
 
-fn triangle(n: Int) Int:
+fn triangle(n: Int) -> Int:
     n * (n + 1) / 2
 
-fn pyramid(n: Int) Int:
+fn pyramid(n: Int) -> Int:
     n * (n + 1) * (2*n + 1) / 6
 
-fn solve(N: Int) Int:
+fn solve(N: Int) -> Int:
     triangle(N)**2 - pyramid(N)
 
 test example:

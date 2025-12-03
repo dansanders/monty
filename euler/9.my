@@ -4,7 +4,7 @@ use std.math
 
 # TODO: Generate coprime pairs.
 # (m, n) -> (2*m - n, m), (2*m + n, m), (m + 2*n, n)  [start at (2, 1)]
-fn solve(N: Int) Int:
+fn solve(N: Int) -> Int:
     let max_m = (isqrt(2*N + 1) - 1) / 2
     for m in 2.up_to(max_m):
         let max_n = min(m - 1, N / (2*m) - m)

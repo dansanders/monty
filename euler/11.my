@@ -4,19 +4,19 @@ use std.math
 
 let _data = embed("data/11.txt")
 
-fn solve(data: Bytes, N: Int) Int:
-    fn parse_line(line Bytes) Iter[Int8]:
+fn solve(data: Bytes, N: Int) -> Int:
+    fn parse_line(line Bytes) -> Iter[Int8]:
         line.split().map(Int8.parse_or_panic)
 
     # TODO: 2D array construction syntax.
     let grid = NDArray.from(data.lines().map(parse_line), 20, 20)
 
-    fn products() Iter[Int]:
-        fn line(y: Int, x: Int, dy: Int, dx: Int) Iter[Int8]:
+    fn products() -> Iter[Int]:
+        fn line(y: Int, x: Int, dy: Int, dx: Int) -> Iter[Int8]:
             for i in 0.up_to(N - 1):
                 yield grid.try_index(y + i*dy, x + i*dx).value_or(0)
 
-        fn line_product(y: Int, x: Int, dy: Int, dx: Int) Int:
+        fn line_product(y: Int, x: Int, dy: Int, dx: Int) -> Int:
             line(y, x, dy, dx).product[Int]()
 
         for y, x in grid.keys():

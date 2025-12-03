@@ -2,14 +2,14 @@
 
 use std.math
 
-fn solve(N: Int) Int:
+fn solve(N: Int) -> Int:
     1.up_to(N).lcm()
 
-fn solve2(N: Int) Int:
+fn solve2(N: Int) -> Int:
     use pkg.lib.sieve.primes
 
     # TODO: Only need to check for higher powers below sqrt(N) == 4.
-    fn prime_powers() Iter[Int]:
+    fn prime_powers() -> Iter[Int]:
         for p in primes(N):
             var a, b = p, p**2
             while b <= N:

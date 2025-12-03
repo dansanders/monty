@@ -3,8 +3,8 @@
 use std.bit_array
 use std.math
 
-fn solve(N: Int) Int:
-    fn primes() Iter[Int]:
+fn solve(N: Int) -> Int:
+    fn primes() -> Iter[Int]:
         let composite = BitArray.zeros(N)
         var q = 2
         while composite.find(0, q) is Some(p):

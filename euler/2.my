@@ -4,8 +4,8 @@ use std.math
 
 # A099919
 # TODO: There is a closed formula.
-fn solve(N: Int) Int:
-    fn even_fibonacci() Iter[Int]:
+fn solve(N: Int) -> Int:
+    fn even_fibonacci() -> Iter[Int]:
         var a, b = 0, 2
         while b <= N:
             yield b
