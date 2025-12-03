@@ -8,7 +8,7 @@ multiple dispatch, sum types, pattern matching, and garbage collection.
 ## Status
 
 Monty is still being designed. There is currently no working compiler or
-standard library documentation.
+standard library.
 
 # Example Code
 
@@ -255,7 +255,7 @@ The try operator `?` can be used to unwrap values, returning errors immediately.
 fn safe_div(dividend: Int, divisor: Int) Int ? Str:
     if divisor == 0:
         return Err("division by zero")
-    if divisor == -1 and dividend = Int.min_value:
+    if divisor == -1 and dividend == Int.min_value:
         return Err("integer overflow")
     Ok(dividend / divisor)
 
