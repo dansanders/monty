@@ -27,6 +27,7 @@ struct _try_process_helper[R, T: Try[_, R]]:
     it: Iter[T]
     var residual: R? = None
 
+impl[R, T: Try[_, R]] _try_process_helper[R, T]
     fn iter() Iter[V]:
         for value in it:
             match value.as_try_result():
