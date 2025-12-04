@@ -62,7 +62,7 @@ struct LinkedList[T]:
         Self()
 
     fn push_front(value: T) -> Void:
-        self.head = ListNode(self.head, value)
+        self.head = Some(ListNode(self.head, value))
 
     fn pop_front() -> T?:
         if self.head is Some(node):
