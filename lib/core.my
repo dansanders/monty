@@ -21,9 +21,11 @@ struct List[T]:
     fn empty() -> Self:
         Self(RawList[T].empty())
 
+    @implicit
     fn as_bool() -> Bool:
         self.0.len()
 
+    @implicit
     fn as_iter() -> Iter[T]:
         var i = 0
         while i < self.0.len():
@@ -46,10 +48,8 @@ trait Zero:
     fn zero() -> Self
 
 # TODO: AddAssign[V] is a special trait that may be fulfilled by
-# `add_assign(V) Void`, or by a mutable binding that is
-# `Add[V, Result: Self]`.
-# TODO: Can checked_int be written checked[int]?
-# Checked sum is it.sum[checked_int]().
+# `add_assign(V) -> Void`, or by a mutable binding that is
+# `Add[V -> Self]`.
 fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
     var result = Acc.zero()
     for value in it:

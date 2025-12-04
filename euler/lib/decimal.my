@@ -68,6 +68,7 @@ struct Decimal:
         # TODO: Handle large shifts.
         Self(a.digits.slice(b))
 
+    @implicit
     fn as_bool() -> Bool:
         self.digits.len()
 

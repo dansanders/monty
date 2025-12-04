@@ -4,7 +4,7 @@ enum Result[V, E]:
     Err(E)
 
     test implements_try:
-        fn f[V, E](x: V ? E) V ? E:
+        fn f[V, E](x: V ? E) -> V ? E:
             (V ? E).from_output(x?)
 
     type WithTryOutput[W] = W ? E
@@ -14,13 +14,14 @@ enum Result[V, E]:
         Self.Ok(output)
 
     @static
-    fn from_residual(residual: E) -> Self:
-        Self.Err(residual)
+    fn from_residual(residual: Never ? E) -> Self:
+        match residual:
+            Err(e) => Err(e)
 
-    fn as_try_result() -> TryResult[V, E]:
+    fn as_try_result() -> TryResult[V, Never ? E]:
         match self:
             Ok(v) => Output(v)
-            Err(e) => Residual(e)
+            Err(e) => Residual((Never ? E).Err(e))
 
     fn is_ok() -> Bool:
         self is Ok(_)
@@ -33,6 +34,7 @@ enum Result[V, E]:
             f(v)
         self
 
+    @implicit
     fn as_iter() -> Iter[V]:
         if self is Ok(v):
             yield v
@@ -58,7 +60,7 @@ enum Option[V]:
     None
 
     test implements_try:
-        fn f[V](x: V?) V?:
+        fn f[V](x: V?) -> V?:
             (V?).from_output(x?)
 
     type WithTryOutput[W] = W?
@@ -66,13 +68,14 @@ enum Option[V]:
     fn from_output(output: V) -> Self:
         Some(output)
 
-    fn from_residual(residual: Void) -> Self:
-        None
+    fn from_residual(residual: Never?) -> Self:
+        match residual:
+            None => None
 
-    fn as_try_result() -> TryResult[V, Void]:
+    fn as_try_result() -> TryResult[V, Never?]:
         match self:
             Some(v) => Output(v)
-            None => Residual(Void)
+            None => Residual((Never?).None)
 
     fn is_some() -> Bool:
         self is Some(_)
@@ -85,6 +88,7 @@ enum Option[V]:
             f(v)
         self
 
+    @implicit
     fn as_iter() -> Iter[V]:
         if self is Some(v):
             yield v
