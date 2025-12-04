@@ -168,7 +168,7 @@ struct MyInt:
     @static
     @implicit
     fn from(value: Int) -> Self:
-        todo
+        Self(value)
 
     @static
     fn add(a: Self, b: Self) -> Self:
