@@ -3,14 +3,17 @@ enum Result[V, E]:
     Ok(V)
     Err(E)
 
-    # TODO: This seems like a test, but it needs syntax.
-    implements Try[V, E]
+    test implements_try:
+        fn f[V, E](x: V ? E) V ? E:
+            (V ? E).from_output(x?)
 
     type WithTryOutput[W] = W ? E
 
+    @static
     fn from_output(output: V) -> Self:
         Self.Ok(output)
 
+    @static
     fn from_residual(residual: E) -> Self:
         Self.Err(residual)
 
@@ -30,8 +33,6 @@ enum Result[V, E]:
             f(v)
         self
 
-    # TODO: Should this just be `iter()`?
-    # Logic against: `into_iter()` makes sense.
     fn as_iter() -> Iter[V]:
         if self is Ok(v):
             yield v
@@ -48,7 +49,7 @@ enum Result[V, E]:
             Ok(v) => v
             Err(e) => panic("$(msg): $(e:?)")
 
-impl V, E -> (V ? E) ? E:
+impl[V, E] -> (V ? E) ? E:
     fn flatten() -> V ? E:
         t?
 
@@ -56,7 +57,9 @@ enum Option[V]:
     Some(V)
     None
 
-    implements Try[V, Void]
+    test implements_try:
+        fn f[V](x: V?) V?:
+            (V?).from_output(x?)
 
     type WithTryOutput[W] = W?
 
@@ -112,7 +115,7 @@ enum Option[V]:
             None, Some(v) => Some(v)
             _ => None
 
-impl V, E -> (V ? E)?:
+impl[V, E] -> (V ? E)?:
     # TODO: Is `V? ? E` acceptable?
     fn transpose() -> (V?) ? E:
         match self:
@@ -120,7 +123,7 @@ impl V, E -> (V ? E)?:
             Some(Err(e)) => Err(e)
             None => Ok(None)
 
-impl V, E -> (V?) ? E:
+impl[V, E] -> (V?) ? E:
     fn transpose() -> (V ? E)?:
         match self:
             Ok(Some(v)) => Some(Ok(v))
