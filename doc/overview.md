@@ -195,7 +195,7 @@ fn foo(a: MyTrait) -> Void:
     print(a.double())
 
 fn main() -> Void:
-    foo(MyInt(5))  # prints "10"
+    foo(MyInt(5))  # prints "MyInt(10)"
 ```
 
 ### Equality

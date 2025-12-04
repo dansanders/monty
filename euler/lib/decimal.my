@@ -1,5 +1,3 @@
-"""Problem 13: Large Sum"""
-
 use std.math
 
 @opaque
