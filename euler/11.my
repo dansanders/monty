@@ -9,7 +9,7 @@ fn solve(data: Bytes, N: Int) -> Int:
         line.split().map(Int8.parse_or_panic)
 
     # TODO: 2D array construction syntax.
-    let grid = NDArray.from(data.lines().map(parse_line), 20, 20)
+    grid = NDArray.from(data.lines().map(parse_line), 20, 20)
 
     fn products() -> Iter[Int]:
         fn line(y: Int, x: Int, dy: Int, dx: Int) -> Iter[Int8]:

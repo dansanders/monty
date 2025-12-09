@@ -6,10 +6,10 @@ let _data = embed("data/8.txt")
 
 fn solve(data: Bytes, N: Int) -> Int:
     fn products(digits: Iter[Int8]) -> Iter[Int]:
-        # TODO: Const generics?
-        let bins = Array.repeat(1, N)
+        bins = Array.repeat(1, N)
         for i, digit in digits.enumerate():
-            bins.apply(|bin| bin * digit)
+            for j in 0.up_to(N - 1):
+                bins[j] *= digit
             if i >= N - 1:
                 yield bins[i % N]
             bins[i % N] = 1

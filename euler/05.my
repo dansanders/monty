@@ -11,7 +11,7 @@ fn solve2(N: Int) -> Int:
     # TODO: Only need to check for higher powers below sqrt(N) == 4.
     fn prime_powers() -> Iter[Int]:
         for p in primes(N):
-            var a, b = p, p**2
+            a, b = p, p**2
             while b <= N:
                 a, b = b, b * p
             yield a

@@ -5,16 +5,16 @@ use std.math
 fn solve(N: Int) -> Int:
     # TODO: Can this be rewritten as an array initialization?
     # TODO: Consider fusing arg_max() with computation.
-    let chain_lengths = Array[Int].zeros(N)
+    chain_lengths = Array[Int].zeros(N)
     for n in 2.to(N - 1):
         if 2.divides(n):
             chain_lengths[n] = chain_lengths[n / 2] + 1
         else:
-            var t = n
-            var steps = 0
+            t = n
+            steps = 0
             while t >= n:
                 t = 3*t + 1
-                let even_steps = t.ctz()
+                even_steps = t.ctz()
                 t = t.shr(even_steps)
                 steps += 1 + even_steps
             chain_lengths[n] = chain_lengths[t] + steps

@@ -37,7 +37,7 @@ fn main() -> Void:
 
 ```monty
 fn fibonacci() -> Iter[Int]:
-    var a, b = 0, 1
+    a, b = 0, 1
     while true:
         yield b
         a, b = b, a + b
@@ -55,7 +55,7 @@ struct ListNode[T]:
     value: T
 
 struct LinkedList[T]:
-    var head: ListNode[T]? = None
+    head: ListNode[T]? = None
 
     @static
     fn empty() -> Self:
@@ -118,7 +118,7 @@ struct Foo:
     Int
 
 fn main() -> Void:
-    let foo = Foo(1, 2)
+    foo = Foo(1, 2)
     match foo:
         Foo(a, b) => print(a, b)  # prints "1 2"
 ```
@@ -137,7 +137,7 @@ fn div_rem(a: Int, b: Int) -> Int, Int:
     a / b, a % b
 
 fn main() -> Void:
-    let result = div_rem(35, 7)
+    result = div_rem(35, 7)
     print("Quotient: ${result.0}")
     print("Remainder: ${result.1}")
 ```
@@ -153,7 +153,7 @@ struct MyInt:
         Self(a.0 + b.0)
 
 fn main() -> Void:
-    let a, b = MyInt(5), MyInt(10)
+    a, b = MyInt(5), MyInt(10)
     print(a + b)  # prints "MyInt(15)"
 ```
 
@@ -175,7 +175,7 @@ struct MyInt:
         Self(a.0 + b.0)
 
 fn main() -> Void:
-    let a: MyInt = 5
+    a: MyInt = 5
     print(a + 10)  # prints "MyInt(15)"
 ```
 
@@ -211,7 +211,7 @@ struct MyInt:
         a.0 == b.0
 
 fn main() -> Void:
-    let a, b = MyInt(5), MyInt(10)
+    a, b = MyInt(5), MyInt(10)
     if a == b:
         print("a equals b")
     else:
@@ -234,7 +234,7 @@ struct MyInt:
             _ => Eq
 
 fn main() -> Void:
-    let a, b = MyInt(5), MyInt(10)
+    a, b = MyInt(5), MyInt(10)
     if a > b:
         print("a is greater than b")
     else:
@@ -248,7 +248,7 @@ fn foo(a: Int) -> Int:
     a + 5
 
 fn main() -> Void:
-    let x = 10.foo()
+    x = 10.foo()
     print(x)  # prints "15"
 
 ```
@@ -261,7 +261,7 @@ enum Foo:
     Baz(Int, Int)
 
 fn main() -> Void:
-    let x = Foo.Bar(5)
+    x = Foo.Bar(5)
     match x:
         Bar(y) => print(y)
         Baz(a, b) => print(a, b)
@@ -290,15 +290,15 @@ fn foo() -> Int ? Str:
 
 ```monty
 fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
-    var result = Acc.zero()
+    result = Acc.zero()
     for value in it:
         result += value
     result
 
 fn main() -> Void:
-    let a = List[Int32].from(1.up_to(10))
-    let x = a.sum()         # x has type Int32
-    let y = a.sum[Int64]()  # y has type Int64
+    a = List[Int32].from(1.up_to(10))
+    x = a.sum()         # x has type Int32
+    y = a.sum[Int64]()  # y has type Int64
 ```
 
 Let's break this down.
@@ -319,12 +319,12 @@ fn foo(bar: Fn[Int -> Int]) -> Int:
     bar(5)
 
 fn baz() -> Void:
-    let a = 10
+    a = 10
 
     fn add_a_1(b: Int) -> Int:
         a + b
 
-    let add_a_2 = |b: Int| a + b
+    add_a_2 = |b: Int| a + b
 
     print(foo(add_a_1))  # prints "15"
     print(foo(add_a_2))  # prints "15"

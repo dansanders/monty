@@ -6,7 +6,7 @@ use std.math
 # TODO: There is a closed formula.
 fn solve(N: Int) -> Int:
     fn even_fibonacci() -> Iter[Int]:
-        var a, b = 0, 2
+        a, b = 0, 2
         while b <= N:
             yield b
             a, b = b, a + 4*b

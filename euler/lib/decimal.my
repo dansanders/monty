@@ -10,9 +10,9 @@ struct Decimal:
         # TODO: Implement sign.
         expect value >= 0
 
-        var result_digits = List[Int8].empty()
+        result_digits = List[Int8].empty()
         while value:
-            value, var digit = value.div_mod(10)
+            value, digit = value.div_mod(10)
             result_digits.append(digit)
 
         Self(result_digits.into_frozen_list())
@@ -23,7 +23,7 @@ struct Decimal:
 
     @static
     fn try_parse(digits: Bytes) -> Self?:
-        var result_digits = List[Int8].empty()
+        result_digits = List[Int8].empty()
         for byte in digits.lstrip('0').rev():
             result_digits.append(Int8.try_parse(byte)?)
 
@@ -40,22 +40,22 @@ struct Decimal:
         if a.len() < b.len():
             a, b = b, a
 
-        var result_digits = List[Int8].empty()
-        var carry = 0_i8
+        result_digits = List[Int8].empty()
+        carry = 0_i8
         for i in 0.up_to(b.len() - 1):
-            var total = a[i] + b[i] + carry
+            total = a[i] + b[i] + carry
             # TODO: Explicit comparison rather than division, if the compiler
             # isn't smart enough.
-            carry, var digit = total.div_mod(10)
+            carry, digit = total.div_mod(10)
             result_digits.append(digit)
 
         for i in b.len().up_to(a.len() - 1):
-            var total = a[i] + carry
-            carry, var digit = total.div_mod(10)
+            total = a[i] + carry
+            carry, digit = total.div_mod(10)
             result_digits.append(digit)
 
         if carry:
-            expect carry == 1i8
+            expect carry == 1_i8
             result_digits.append(carry)
 
         Self(result_digits.into_frozen_list())
@@ -76,7 +76,7 @@ struct Decimal:
         self.digits.len()
 
     fn try_as_int() -> Int?:
-        var result = 0
+        result = 0
         for digit in self.digits.rev():
             # TODO: Is it faster to compare the value up front?
             result = 10.check_mul(result)?.check_add(digit)?

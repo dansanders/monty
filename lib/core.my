@@ -27,7 +27,7 @@ struct List[T]:
 
     @implicit
     fn as_iter() -> Iter[T]:
-        var i = 0
+        i = 0
         while i < self.0.len():
             yield self.0.unsafe_index_unchecked(i)
             i += 1
@@ -51,7 +51,7 @@ trait Zero:
 # `add_assign(V) -> Void`, or by a mutable binding that is
 # `Add[V -> Self]`.
 fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
-    var result = Acc.zero()
+    result = Acc.zero()
     for value in it:
         result += value
     result
@@ -63,7 +63,7 @@ trait CheckAdd[V]:
     fn check_add(V) -> Self?
 
 fn check_sum[V -> Acc: Zero + CheckAdd[V] = V](it: Iter[V]) -> Acc?:
-    var result = Acc.zero()
+    result = Acc.zero()
     for value in it:
         result = result.check_add(value)?
     result
@@ -79,7 +79,7 @@ trait Empty:
 # name/signatue? Is control over Acc necessary?
 # TODO: Write some examples of use.
 fn join[V -> Acc: Empty + AddAssign[V] = V](it: Iter[V]) -> Acc:
-    var result = Acc.empty()
+    result = Acc.empty()
     for value in it:
         result += value
     result

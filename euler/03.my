@@ -10,7 +10,7 @@ fn wheel() -> Iter[Int]:
         for w in [7, 11, 13, 17, 19, 23, 29, 31]:
             yield n + w
 
-fn solve(var n: Int) -> Int:
+fn solve(n: Int) -> Int:
     for p in wheel():
         if p**2 > n:
             return n
