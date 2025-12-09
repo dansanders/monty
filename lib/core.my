@@ -59,6 +59,15 @@ fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
 fn try_sum[V, T: Try[V] -> Acc: Zero + AddAssign[V] = V](it: Iter[T]) -> T.WithTryOutput[Acc]:
     it.try_process(|i: Iter[V]| i.sum[Acc]())
 
+trait CheckAdd[V]:
+    fn check_add(V) -> Self?
+
+fn check_sum[V -> Acc: Zero + CheckAdd[V] = V](it: Iter[V]) -> Acc?:
+    var result = Acc.zero()
+    for value in it:
+        result = result.check_add(value)?
+    result
+
 # Strings
 trait Empty:
     @static
