@@ -272,14 +272,16 @@ fn main() -> Void:
 > 📝 Note: the type `Option[T]` may be written `T?` and `Result[V, E]` may be
 > written `V ? E`.
 
-The try operator `?` can be used to unwrap values, returning errors immediately.
+The `throw` statement returns an error value immediately.
+
+The try operator `?` unwraps values, throwing errors.
 
 ```monty
 fn safe_div(dividend: Int, divisor: Int) -> Int ? Str:
     if divisor == 0:
-        return Err("division by zero")
+        throw "division by zero"
     if divisor == -1 and dividend == Int.min_value:
-        return Err("integer overflow")
+        throw "integer overflow"
     Ok(dividend / divisor)
 
 fn foo() -> Int ? Str:

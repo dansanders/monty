@@ -39,7 +39,7 @@ trait FromIter[T]:
 fn collect[V -> C: FromIter[V]](it: Iter[V]) -> C:
     C.from(it)
 
-fn try_collect[V, T: Try[V] -> C: FromIter[V]](it: Iter[V]) -> T.WithTryOutput[C]:
+fn try_collect[V, T: Try[V] -> C: FromIter[V]](it: Iter[V]) -> T.AsTry[C]:
     it.try_process(|i: Iter[V]| it.collect[C]())
 
 # Numbers
@@ -56,7 +56,7 @@ fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
         result += value
     result
 
-fn try_sum[V, T: Try[V] -> Acc: Zero + AddAssign[V] = V](it: Iter[T]) -> T.WithTryOutput[Acc]:
+fn try_sum[V, T: Try[V] -> Acc: Zero + AddAssign[V] = V](it: Iter[T]) -> T.AsTry[Acc]:
     it.try_process(|i: Iter[V]| i.sum[Acc]())
 
 trait CheckAdd[V]:

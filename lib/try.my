@@ -1,35 +1,30 @@
-enum TryResult[V, R]:
-    Output(V)
-    Residual(R)
-
-trait Try[Output, Residual]:
-    # TODO: This type is optional, `?` works without it.
-    type WithTryOutput[T]: Try[T, Residual]
+trait Try[V, E]:
+    type AsTry[T]: Try[T, E]
 
     @static
-    fn from_output(output: Output) Self
+    fn from_value(value: V) Self
 
     @static
-    fn from_residual(residual: Residual) Self
+    fn from_error(error: E) Self
 
-    fn as_try_result() TryResult[Output, Residual]
+    fn as_result() Result[V, E]
 
-fn try_process[T: Try, R](it: Iter[T], f: Fn[Iter[T.Output] -> R]) T.WithTryOutput[R]:
+fn try_process[T: Try, R](it: Iter[T], f: Fn[Iter[T.Output] -> R]) T.AsTry[R]:
     helper = _try_process_helper(it)
     result = f(helper.iter())
-    match helper.residual:
-        Some(r) => T.WithTryOutput[S].from_residual(r)
-        None => T.WithTryOutput[S].from_output(result)
+    match helper.err:
+        Some(e) => T.AsTry[R].from_error(e)
+        None => T.AsTry[T].from_value(result)
 
 struct _try_process_helper[T: Try]:
     it: Iter[T]
-    residual: T.Residual? = None
+    err: T.E? = None
 
     fn iter() -> Iter[T.Output]:
         for value in it:
-            match value.as_try_result():
-                Output(v) =>
+            match value.as_result():
+                Ok(v) =>
                     yield v
-                Residual(r) =>
-                    self.residual = Some(r)
+                Err(e) =>
+                    self.err = Some(e)
                     return
