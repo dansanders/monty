@@ -64,7 +64,7 @@ struct LinkedList[T]:
     fn push_front(value: T) -> Void:
         self.head = Some(ListNode(self.head, value))
 
-    fn pop_front() -> T?:
+    fn try_pop_front() -> T?:
         if self.head is Some(node):
             self.head = node.next
             Some(node.value)
@@ -272,16 +272,14 @@ fn main() -> Void:
 > 📝 Note: the type `Option[T]` may be written `T?` and `Result[V, E]` may be
 > written `V ? E`.
 
-The `throw` statement returns a new error value immediately.
-
-The try operator `?` unwraps values, throwing errors.
+The try operator `?` unwraps values, returning errors immediately.
 
 ```monty
 fn safe_div(dividend: Int, divisor: Int) -> Int ? Str:
     if divisor == 0:
-        throw "division by zero"
+        return Err("division by zero")
     if divisor == -1 and dividend == Int.min_value:
-        throw "integer overflow"
+        return Err("integer overflow")
     Ok(dividend / divisor)
 
 fn foo() -> Int ? Str:
