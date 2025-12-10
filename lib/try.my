@@ -18,7 +18,7 @@ fn try_process[T: Try, R](it: Iter[T], f: Fn[Iter[T.Output] -> R]) T.AsTry[R]:
 
 struct _try_process_helper[T: Try]:
     it: Iter[T]
-    err: T.E? = None
+    var err: T.E? = None
 
     fn iter() -> Iter[T.Output]:
         for value in it:

@@ -55,7 +55,7 @@ struct ListNode[T]:
     value: T
 
 struct LinkedList[T]:
-    head: ListNode[T]? = None
+    var head: ListNode[T]? = None
 
     @static
     fn empty() -> Self:
@@ -272,7 +272,7 @@ fn main() -> Void:
 > 📝 Note: the type `Option[T]` may be written `T?` and `Result[V, E]` may be
 > written `V ? E`.
 
-The `throw` statement returns an error value immediately.
+The `throw` statement returns a new error value immediately.
 
 The try operator `?` unwraps values, throwing errors.
 
