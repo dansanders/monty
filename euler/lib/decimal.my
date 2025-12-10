@@ -1,5 +1,3 @@
-use std.math
-
 @opaque
 struct Decimal:
     digits: FrozenList[Int8]
@@ -28,10 +26,6 @@ struct Decimal:
             result_digits.append(Int8.try_parse(byte)?)
 
         Some(Self(result_digits.into_frozen_list()))
-
-    @static
-    fn parse_or_panic(digits: Bytes) -> Self:
-        Self.try_parse(digits).value_or_panic()
 
     @static
     fn add(a: Self, b: Self) -> Self:
@@ -81,6 +75,3 @@ struct Decimal:
             # TODO: Is it faster to compare the value up front?
             result = 10.check_mul(result)?.check_add(digit)?
         Some(result)
-
-    fn as_int_or_panic() -> Int:
-        self.try_as_int().value_or_panic()

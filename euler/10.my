@@ -1,13 +1,12 @@
 ## Problem 10: Summation of Primes
 
 use std.bit_array
-use std.math
 
 fn solve(N: Int) -> Int:
     fn primes() -> Iter[Int]:
         composite = BitArray.zeros(N)
         q = 2
-        while composite.find(0, q) is Some(p):
+        while composite.try_find(0, q) is Some(p):
             yield p
             for m in (p**2).up_to(N - 1, p):
                 composite[m] = 1

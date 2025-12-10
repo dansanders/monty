@@ -1,7 +1,5 @@
 ## Problem 14: Longest Collatz Sequence
 
-use std.math
-
 fn solve(N: Int) -> Int:
     # TODO: Can this be rewritten as an array initialization?
     # TODO: Consider fusing arg_max() with computation.

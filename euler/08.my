@@ -1,7 +1,5 @@
 ## Problem 8: Largest Product in a Series
 
-use std.math
-
 let _data = embed("data/8.txt")
 
 fn solve(data: Bytes, N: Int) -> Int:
@@ -16,7 +14,7 @@ fn solve(data: Bytes, N: Int) -> Int:
 
     data
         .remove_whitespace()
-        .map(Int8.parse_or_panic)
+        .map(|c: UInt8| Int8.try_parse(c).value_or_panic())
         .products()
         .max()
 

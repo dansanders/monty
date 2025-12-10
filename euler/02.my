@@ -1,7 +1,5 @@
 ## Problem 2: Even Fibonacci Numbers
 
-use std.math
-
 # A099919
 # TODO: There is a closed formula.
 fn solve(N: Int) -> Int:

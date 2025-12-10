@@ -1,7 +1,6 @@
 ## Problem 4: Largest Palindrome Product
 
-use std.math
-
+# TODO: Does `prefix` need `var`?
 fn even_palindrome(prefix: Int) -> Int:
     test usage:
         expect even_palindrome(123) == 123_321

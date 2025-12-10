@@ -1,7 +1,5 @@
 ## Problem 3: Largest Prime Factor
 
-use std.math
-
 fn wheel() -> Iter[Int]:
     for p in [2, 3, 5]:
         yield p
@@ -10,6 +8,7 @@ fn wheel() -> Iter[Int]:
         for w in [7, 11, 13, 17, 19, 23, 29, 31]:
             yield n + w
 
+# TODO: Does `n` need `var`?
 fn solve(n: Int) -> Int:
     for p in wheel():
         if p**2 > n:

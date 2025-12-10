@@ -1,17 +1,18 @@
 ## Problem 7: 10_001st Prime
 
 use std.bit_array
-use std.math
+use std.math.arith
 
 fn solve(N: Int) -> Int:
     # TODO: Fix upper bound for N < 6.
-    upper_bound = (N * (ln(N) + ln(ln(N)))).as_int_or_panic()
+    scale = ln(N) + ln(ln(N))
+    upper_bound = (N * scale).try_ifloor().value_or_panic()
     composite = BitArray.zeros(upper_bound + 1)
     p = 2
     for _ in 0.up_to(N - 2):
         for m in (p**2).up_to(upper_bound, p):
             composite[m] = 1
-        p = composite.find_or_panic(0, p + 1)
+        p = composite.try_find(0, p + 1).value_or_panic()
     p
 
 test example:

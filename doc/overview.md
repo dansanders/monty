@@ -22,8 +22,6 @@ fn main() -> Void:
 ## FizzBuzz
 
 ```monty
-use std.math
-
 fn main() -> Void:
     for n in 1.up_to(100):
         match 3.divides(n), 5.divides(n):

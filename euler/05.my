@@ -1,12 +1,13 @@
 ## Problem 5: Smallest Multiple
 
-use std.math
-
 fn solve(N: Int) -> Int:
-    1.up_to(N).lcm()
+    use std.math.nt
+
+    # TODO: Figure out what kinds of folds are available.
+    2.up_to(N).fold(1, lcm)
 
 fn solve2(N: Int) -> Int:
-    use pkg.lib.sieve.primes
+    use sieve.primes
 
     # TODO: Only need to check for higher powers below sqrt(N) == 4.
     fn prime_powers() -> Iter[Int]:

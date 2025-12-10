@@ -1,13 +1,13 @@
 ## Problem 13: Large Sum
 
-use pkg.lib.decimal
-use std.math
+use decimal
 
 let _data = embed("data/13.txt")
 
 fn solve(data: Bytes, N: Int) -> Int:
-    total = data.lines().map(Decimal.parse_or_panic).sum()
-    (total >> (total.len() - N)).int_or_panic()
+    parse_decimal = |s: Bytes| Decimal.try_parse(s).value_or_panic()
+    total = data.lines().map(parse_decimal).sum()
+    (total >> (total.len() - N)).try_as_int().value_or_panic()
 
 @manual
 test solution:

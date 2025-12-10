@@ -1,8 +1,6 @@
 ## Problem 12: Highly Divisible Triangular Number
 
-use std.math
-
-use pkg.lib.sieve.divisor_count
+use sieve.divisor_count
 
 fn divide_even(n: Int) -> Int:
     match 2.divides(n):

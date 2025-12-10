@@ -1,6 +1,6 @@
 ## Problem 1: Multiples of 3 or 5
 
-use std.math
+use std.math.nt
 
 fn triangle(n: Int) -> Int:
     n * (n + 1) / 2
