@@ -13,8 +13,8 @@ fn solve(data: Bytes, N: Int) -> Int:
             bins[i % N] = 1
 
     data
-        .remove_whitespace()
-        .map(|c: UInt8| Int8.try_parse(c).value_or_panic())
+        .filter(|b: Byte| !b.is_whitespace())
+        .map(Int8.parse)
         .products()
         .max()
 

@@ -28,6 +28,10 @@ struct Decimal:
         Some(Self(result_digits.into_frozen_list()))
 
     @static
+    fn parse(digits: Bytes) -> Self:
+        Self.try_parse(digits).value_or_panic()
+
+    @static
     fn add(a: Self, b: Self) -> Self:
         var a = a.digits
         var b = b.digits
@@ -75,3 +79,6 @@ struct Decimal:
             # TODO: Is it faster to compare the value up front?
             result = 10.check_mul(result)?.check_add(digit)?
         Some(result)
+
+    fn as_int() -> Int:
+        self.try_as_int().value_or_panic()

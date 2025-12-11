@@ -5,9 +5,8 @@ use decimal
 let _data = embed("data/13.txt")
 
 fn solve(data: Bytes, N: Int) -> Int:
-    parse_decimal = |s: Bytes| Decimal.try_parse(s).value_or_panic()
-    total = data.lines().map(parse_decimal).sum()
-    (total >> (total.len() - N)).try_as_int().value_or_panic()
+    total = data.lines().map(Decimal.parse).sum()
+    (total >> (total.len() - N)).as_int()
 
 @manual
 test solution:

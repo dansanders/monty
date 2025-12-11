@@ -6,13 +6,13 @@ use std.math.arith
 fn solve(N: Int) -> Int:
     # TODO: Fix upper bound for N < 6.
     scale = ln(N) + ln(ln(N))
-    upper_bound = (N * scale).try_ifloor().value_or_panic()
+    upper_bound = (N * scale).as_int()
     composite = BitArray.zeros(upper_bound + 1)
     p = 2
     for _ in 0.up_to(N - 2):
         for m in (p**2).up_to(upper_bound, p):
             composite[m] = 1
-        p = composite.try_find(0, p + 1).value_or_panic()
+        p = composite.find(0, p + 1)
     p
 
 test example:

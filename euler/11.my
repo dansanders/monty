@@ -4,8 +4,7 @@ let _data = embed("data/11.txt")
 
 fn solve(data: Bytes, N: Int) -> Int:
     fn parse_line(line Bytes) -> Iter[Int8]:
-        parse_int = |s: Bytes| Int8.try_parse(s).value_or_panic()
-        line.split().map(parse_int)
+        line.split().map(Int8.parse)
 
     # TODO: 2D array construction syntax.
     grid = NDArray.from(data.lines().map(parse_line), 20, 20)
