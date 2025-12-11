@@ -70,11 +70,9 @@ struct LinkedList[T]:
             None
 ```
 
-# Features
+# Planned Features
 
-## Planned Features
-
-### Attributes
+## Attributes
 
 Attributes, written `@attribute_name`, are used to add metadata to
 syntax elements. For now they primarily serve to reduce the number of keywords
@@ -86,9 +84,7 @@ trait Foo:
     fn bar(@kw baz: Int) -> Int
 ```
 
-### Inline Tests
-
-> 📝 Note: tests may also appear inside of functions.
+## Inline Tests
 
 ```monty
 fn foo(a: Int) -> Int
@@ -102,13 +98,14 @@ Attributes:
 
 * `@manual`: do not run the test automatically.
 
-### Constructors
+## Constructors
 
 Constructor syntax is used to create instances of types, and to pattern match
 those types. Constructors cannot be overridden.
 
-> 📝 Note: these examples all use tuple structs, which are structs with no
-> named fields. Struct fields can be named and have default values.
+> [!NOTE]
+> These examples all use tuple structs, which are structs with no named fields.
+> Struct fields can be named and have default values.
 
 ```monty
 struct Foo:
@@ -126,9 +123,10 @@ Attributes:
 * `@opaque`: Restrict construction, pattern matching, and field access to the
 current module.
 
-### Tuples
+## Tuples
 
-> 📝 Note: parentheses are usually optional around tuples.
+> [!NOTE]
+> Parentheses are usually optional around tuples.
 
 ```monty
 fn div_rem(a: Int, b: Int) -> Int, Int:
@@ -140,7 +138,7 @@ fn main() -> Void:
     print("Remainder: ${result.1}")
 ```
 
-### Operator Overloading
+## Operator Overloading
 
 ```monty
 struct MyInt:
@@ -155,7 +153,7 @@ fn main() -> Void:
     print(a + b)  # prints "MyInt(15)"
 ```
 
-### Implicit Conversion
+## Implicit Conversion
 
 Types may opt-in to automatic, infallible conversions.
 
@@ -177,7 +175,7 @@ fn main() -> Void:
     print(a + 10)  # prints "MyInt(15)"
 ```
 
-### Duck Typing
+## Duck Typing
 
 ```monty
 struct MyInt:
@@ -196,9 +194,7 @@ fn main() -> Void:
     foo(MyInt(5))  # prints "MyInt(10)"
 ```
 
-### Equality
-
-> 📝 Note: partial equality is implemented by `fn try_eq() Bool?`.
+## Equality
 
 ```monty
 struct MyInt:
@@ -216,9 +212,7 @@ fn main() -> Void:
         print("a does not equal b")
 ```
 
-### Comparisons
-
-> 📝 Note: partial order is implemented by `fn try_cmp() Ord?`.
+## Comparisons
 
 ```monty
 struct MyInt:
@@ -239,7 +233,7 @@ fn main() -> Void:
         print("a is not greater than b")
 ```
 
-### UFCS
+## UFCS
 
 ```monty
 fn foo(a: Int) -> Int:
@@ -251,7 +245,7 @@ fn main() -> Void:
 
 ```
 
-### Sum Types
+## Sum Types
 
 ```monty
 enum Foo:
@@ -265,10 +259,11 @@ fn main() -> Void:
         Baz(a, b) => print(a, b)
 ```
 
-### Error Handling
+## Error Handling
 
-> 📝 Note: the type `Option[T]` may be written `T?` and `Result[V, E]` may be
-> written `V ? E`.
+> [!NOTE]
+> The type `Option[T]` can be written `T?` and `Result[V, E]` can be written
+> `V ? E`.
 
 The try operator `?` unwraps values, returning errors immediately.
 
@@ -284,7 +279,7 @@ fn foo() -> Int ? Str:
     Ok(5.safe_div(3)?.safe_div(0)?)
 ```
 
-### Generics
+## Generics
 
 ```monty
 fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
@@ -310,7 +305,7 @@ types are placed on the left while required types are placed on the right.
 `AddAssign[V]`.
 * `= V`: If not specified, the default value of `Acc` is `V`.
 
-### Closures
+## Closures
 
 ```monty
 fn foo(bar: Fn[Int -> Int]) -> Int:
@@ -328,14 +323,12 @@ fn baz() -> Void:
     print(foo(add_a_2))  # prints "15"
 ```
 
-## Hopeful Features
+## String Matching
 
-* Range syntax
-* Bitfields
-* Threads
-* Async (via stackful coroutines)
-* List, map, and set literals
-* Bidirectional type inference
-* Arrays
-* SIMD
-* CTFE
+```monty
+fn foo() -> Void:
+    match "Hello, world!":
+        /"Hello, " (name = [A-Z] [a-z]*) "!"/ => print("Name: ${name}")
+        /"Hello, " (num: Int) "!"/ => print("Serial number: ${num}")
+        _ => print("No ID found")
+```
