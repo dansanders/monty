@@ -55,8 +55,7 @@ struct ListNode[T]:
 struct LinkedList[T]:
     var head: ListNode[T]? = None
 
-    @static
-    fn empty() -> Self:
+    static fn empty() -> Self:
         Self()
 
     fn push_front(value: T) -> Void:
@@ -74,14 +73,21 @@ struct LinkedList[T]:
 
 ## Attributes
 
-Attributes, written `@attribute_name`, are used to add metadata to
+Attributes, written `@[attribute_name]`, are used to add metadata to
 syntax elements. For now they primarily serve to reduce the number of keywords
 in the language.
 
 ```monty
-trait Foo:
-    @static
-    fn bar(@kw baz: Int) -> Int
+@[opaque]
+struct Foo:
+    Int
+
+trait Bar:
+    fn baz(@[kw] baz: Int) -> Int
+
+@[manual]
+test end_to_end:
+    todo
 ```
 
 ## Inline Tests
@@ -96,7 +102,7 @@ test foo_adds_5:
 
 Attributes:
 
-* `@manual`: do not run the test automatically.
+* `manual`: do not run the test automatically.
 
 ## Constructors
 
@@ -120,7 +126,7 @@ fn main() -> Void:
 
 Attributes:
 
-* `@opaque`: Restrict construction, pattern matching, and field access to the
+* `opaque`: Restrict construction, pattern matching, and field access to the
 current module.
 
 ## Tuples
@@ -144,8 +150,7 @@ fn main() -> Void:
 struct MyInt:
     Int
 
-    @static
-    fn add(a: Self, b: Self) -> Self:
+    static fn add(a: Self, b: Self) -> Self:
         Self(a.0 + b.0)
 
 fn main() -> Void:
@@ -161,13 +166,11 @@ Types may opt-in to automatic, infallible conversions.
 struct MyInt:
     Int
 
-    @static
-    @implicit
-    fn from(value: Int) -> Self:
+    @[implicit]
+    static fn from(value: Int) -> Self:
         Self(value)
 
-    @static
-    fn add(a: Self, b: Self) -> Self:
+    static fn add(a: Self, b: Self) -> Self:
         Self(a.0 + b.0)
 
 fn main() -> Void:
@@ -200,8 +203,7 @@ fn main() -> Void:
 struct MyInt:
     Int
 
-    @static
-    fn eq(a: Self, b: Self) -> Bool:
+    static fn eq(a: Self, b: Self) -> Bool:
         a.0 == b.0
 
 fn main() -> Void:
@@ -218,8 +220,7 @@ fn main() -> Void:
 struct MyInt:
     Int
 
-    @static
-    fn cmp(a: Self, b: Self) -> Ord:
+    static fn cmp(a: Self, b: Self) -> Ord:
         match:
             if a.0 < b.0 => Lt
             if a.0 > b.0 => Gt

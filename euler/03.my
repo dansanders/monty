@@ -21,6 +21,6 @@ fn solve(n: Int) -> Int:
 test example:
     expect solve(13_195) == 29
 
-@manual
+@[manual]
 test solution:
     expect solve(600_851_475_143) == 6_857

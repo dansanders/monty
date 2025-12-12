@@ -25,6 +25,6 @@ fn solve(data: Bytes, N: Int) -> Int:
 
     products().max()
 
-@manual
+@[manual]
 test solution:
     solve(_data, 4) == 70_600_674

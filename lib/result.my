@@ -9,12 +9,10 @@ enum Result[V, E]:
 
     type AsTry[T] = T ? E
 
-    @static
-    fn from_value(value: V) -> Self:
+    static fn from_value(value: V) -> Self:
         Ok(value)
 
-    @static
-    fn from_error(error: E) -> Self:
+    static fn from_error(error: E) -> Self:
         Err(error)
 
     fn as_result() -> Self:
@@ -31,7 +29,7 @@ enum Result[V, E]:
             f(v)
         self
 
-    @implicit
+    @[implicit]
     fn as_iter() -> Iter[V]:
         if self is Ok(v):
             yield v
@@ -84,7 +82,7 @@ enum Option[V]:
             f(v)
         self
 
-    @implicit
+    @[implicit]
     fn as_iter() -> Iter[V]:
         if self is Some(v):
             yield v

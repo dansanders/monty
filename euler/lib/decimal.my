@@ -1,10 +1,9 @@
-@opaque
+@[opaque]
 struct Decimal:
     digits: FrozenList[Int8]
 
-    @static
-    @implicit
-    fn from(value: Int) -> Self:
+    @[implicit]
+    static fn from(value: Int) -> Self:
         # TODO: Implement sign.
         expect value >= 0
 
@@ -15,24 +14,22 @@ struct Decimal:
 
         Self(result_digits.into_frozen_list())
 
-    @static
-    fn zero() -> Self:
+    static fn zero() -> Self:
         Self(FrozenList[Int8].empty())
 
-    @static
-    fn try_parse(digits: Bytes) -> Self?:
+    @[rel(parse)]
+    static fn try_parse(digits: Bytes) -> Self?:
         result_digits = List[Int8].empty()
         for byte in digits.lstrip('0').rev():
             result_digits.append(Int8.try_parse(byte)?)
 
         Some(Self(result_digits.into_frozen_list()))
 
-    @static
-    fn parse(digits: Bytes) -> Self:
+    @[panics, rel(try_parse)]
+    static fn parse(digits: Bytes) -> Self:
         Self.try_parse(digits).value_or_panic()
 
-    @static
-    fn add(a: Self, b: Self) -> Self:
+    static fn add(a: Self, b: Self) -> Self:
         var a = a.digits
         var b = b.digits
         if a.len() < b.len():
@@ -58,21 +55,21 @@ struct Decimal:
 
         Self(result_digits.into_frozen_list())
 
-    @static
-    fn shr(a: Self, b: Int) -> Self:
+    static fn shr(a: Self, b: Int) -> Self:
         # TODO: Should negative shifts be supported?
         expect b >= 0
 
         # TODO: Handle large shifts.
         Self(a.digits.slice(b))
 
-    @implicit
+    @[implicit]
     fn as_bool() -> Bool:
         self.digits.len()
 
     fn len() -> Int:
         self.digits.len()
 
+    @[rel(as_int)]
     fn try_as_int() -> Int?:
         result = 0
         for digit in self.digits.rev():
@@ -80,5 +77,6 @@ struct Decimal:
             result = 10.check_mul(result)?.check_add(digit)?
         Some(result)
 
+    @[panics, rel(try_as_int)]
     fn as_int() -> Int:
         self.try_as_int().value_or_panic()

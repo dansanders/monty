@@ -1,12 +1,7 @@
 trait Try[V, E]:
     type AsTry[T]: Try[T, E]
-
-    @static
-    fn from_value(value: V) Self
-
-    @static
-    fn from_error(error: E) Self
-
+    static fn from_value(value: V) Self
+    static fn from_error(error: E) Self
     fn as_result() Result[V, E]
 
 fn try_process[T: Try, R](it: Iter[T], f: Fn[Iter[T.Output] -> R]) T.AsTry[R]:

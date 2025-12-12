@@ -18,6 +18,6 @@ fn solve(N: Int) -> Int:
             chain_lengths[n] = chain_lengths[t] + steps
     chain_lengths.arg_max()
 
-@manual
+@[manual]
 test solution:
     expect solve(1_000_000) == 837_799

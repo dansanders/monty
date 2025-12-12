@@ -8,6 +8,6 @@ fn solve(N: Int) -> Int:
 test example:
     expect solve(2) == 6
 
-@manual
+@[manual]
 test solution:
     expect solve(20) == 137_846_528_820
