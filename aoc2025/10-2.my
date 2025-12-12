@@ -1,0 +1,36 @@
+use std.linear_program
+
+let _data1 = embed("data/10-example.txt")
+let _data2 = embed("data/10.txt")
+let _data = _data2
+
+fn _join(pattern: MX, separator: MX) MX:
+    /(*return = pattern) (separator (*return = pattern))*/
+
+let _csv_mx = /return: Int = "0" | [1-9] [0-9]*/._join(",")
+
+fn main() -> Void:
+    total = 0
+    for line in data.lines():
+        expect line is ///
+            "[" ['.' '#']+ "] "
+            ("(" (*buttons = _csv_mx) ") ")+
+            "{" (joltages = _csv_mx) "}"
+        ///
+        
+        presses_var = LPInt.const(0)
+        joltage_vars = Array.new(joltages.len(), |i| LPInt.const(0))
+        for i, button in buttons.enumerate():
+            button_var = LPInt.new("b${i}", min: 0)
+            presses_var += button_var
+            for j in button:
+                joltage_vars[j] += button_var
+
+        problem = LPProblem.minimize(presses_var)
+        for i, joltage in joltages:
+            problem.add_constraint(joltage_vars[i] == joltage)
+
+        match problem.solve():
+            Optimal(presses) => total += presses
+            _ => unreachable
+    print(total)

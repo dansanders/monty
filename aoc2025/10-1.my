@@ -1,0 +1,36 @@
+let _data1 = embed("data/10-example.txt")
+let _data2 = embed("data/10.txt")
+let _data = _data2
+
+fn _join(pattern: MX, separator: MX) MX:
+    /(*return = pattern) (separator (*return = pattern))*/
+
+let _csv_mx = /return: Int = "0" | [1-9] [0-9]*/._join(",")
+
+fn _parse_button(button: Iter[Int]) -> Int:
+    button.fold(0, |acc, i| acc | (1 << i))
+
+fn _parse_lights(lights: Str) -> Int:
+    lights.find_all("#")._parse_button()
+
+fn main() -> Void:
+    total = 0
+    for line in data.lines():
+        expect line is ///
+            "[" (target: _parse_lights = ['.' '#']+) "] "
+            ("(" (*buttons: _parse_button = _csv_mx) ") ")+
+            "{" _csv_mx "}"
+        ///
+
+        states = Map[Int -> Int]()
+        states[0] = 0
+        for button in buttons:
+            prev_states = states.copy()
+            for prev_lights, prev_presses in prev_states:
+                lights = prev_lights ^ button
+                presses = prev_presses + 1
+                match lights in states:
+                    true => states[lights] = min(states[lights], presses)
+                    false => states[lights] = presses
+        total += states[target]
+    print(total)
