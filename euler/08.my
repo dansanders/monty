@@ -1,6 +1,6 @@
 ## Problem 8: Largest Product in a Series
 
-let _data = embed("data/8.txt")
+let _data = embed_bytes("data/8.txt")
 
 fn solve(data: Bytes, N: Int) -> Int:
     fn products(digits: Iter[Int8]) -> Iter[Int]:

@@ -2,7 +2,7 @@
 
 use decimal
 
-let _data = embed("data/13.txt")
+let _data = embed_bytes("data/13.txt")
 
 fn solve(data: Bytes, N: Int) -> Int:
     total = data.lines().map(Decimal.parse).sum()
