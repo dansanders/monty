@@ -1,7 +1,7 @@
 ## Problem 7: 10_001st Prime
 
 use std.bit_array
-use std.math.arith
+use std.math.arithmetic
 
 fn solve(N: Int) -> Int:
     # TODO: Fix upper bound for N < 6.

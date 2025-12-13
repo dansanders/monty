@@ -7,7 +7,7 @@ let _data = _data2
 fn _join(pattern: MX, separator: MX) MX:
     /(*return = pattern) (separator (*return = pattern))*/
 
-let _csv_mx = /return: Int = "0" | [1-9] [0-9]*/._join(",")
+let _csv_mx = /return: Int = "0" | [1-9][0-9]*/._join(",")
 
 fn main() -> Void:
     total = 0
@@ -27,7 +27,7 @@ fn main() -> Void:
                 joltage_vars[j] += button_var
 
         problem = LPProblem.minimize(presses_var)
-        for i, joltage in joltages:
+        for i, joltage in joltages.enumerate():
             problem.add_constraint(joltage_vars[i] == joltage)
 
         match problem.solve():

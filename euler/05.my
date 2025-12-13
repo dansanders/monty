@@ -1,7 +1,7 @@
 ## Problem 5: Smallest Multiple
 
 fn solve(N: Int) -> Int:
-    use std.math.nt
+    use std.math.number_theory
 
     # TODO: Figure out what kinds of folds are available.
     2.up_to(N).fold(1, lcm)

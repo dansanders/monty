@@ -5,7 +5,7 @@ let _data = _data2
 fn _join(pattern: MX, separator: MX) MX:
     /(*return = pattern) (separator (*return = pattern))*/
 
-let _csv_mx = /return: Int = "0" | [1-9] [0-9]*/._join(",")
+let _csv_mx = /return: Int = "0" | [1-9][0-9]*/._join(",")
 
 fn _parse_button(button: Iter[Int]) -> Int:
     button.fold(0, |acc, i| acc | (1 << i))

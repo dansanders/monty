@@ -1,6 +1,6 @@
 ## Problem 9: Special Pythagorean Triplet
 
-use std.math.arith
+use std.math.arithmetic
 
 # TODO: Generate coprime pairs.
 # (m, n) -> (2*m - n, m), (2*m + n, m), (m + 2*n, n)  [start at (2, 1)]
