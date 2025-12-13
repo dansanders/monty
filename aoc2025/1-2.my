@@ -4,13 +4,12 @@ let _data = _data2
 
 fn main() -> Void:
     for line in _data.lines():
-        expect line is / (dir = [LR]) (amount: Int = [1-9] [0-9]*) /
+        expect line is /(dir = [LR])(amount: Int = [1-9][0-9]*)/
         match dir:
             "L" =>
-                if dial == 0:
-                    count += amount / 100
-                else:
-                    count += (100 - dial + amount) / 100
+                match dial:
+                    0 => count += amount / 100
+                    _ => count += (100 - dial + amount) / 100
                 dial = (dial - amount).mod(100)
             "R" =>
                 count += (dial + amount) / 100

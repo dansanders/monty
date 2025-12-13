@@ -7,7 +7,7 @@ fn main() -> Void:
     dial = 50
     count = 0
     for line in _data.lines():
-        expect line is / (dir = [LR]) (amount: Int = [1-9] [0-9]*) /
+        expect line is /(dir = [LR])(amount: Int = [1-9][0-9]*)/
         match dir:
             "L" => dial = (dial - amount).mod(100)
             "R" => dial = (dial + amount).mod(100)

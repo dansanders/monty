@@ -7,15 +7,15 @@ fn solve(N: Int) -> Int:
     for n in 2.to(N - 1):
         if 2.divides(n):
             chain_lengths[n] = chain_lengths[n / 2] + 1
-        else:
-            t = n
-            steps = 0
-            while t >= n:
-                t = 3*t + 1
-                even_steps = t.ctz()
-                t = t.shr(even_steps)
-                steps += 1 + even_steps
-            chain_lengths[n] = chain_lengths[t] + steps
+            continue
+        t = n
+        steps = 0
+        while t >= n:
+            t = 3*t + 1
+            even_steps = t.ctz()
+            t = t.shr(even_steps)
+            steps += 1 + even_steps
+        chain_lengths[n] = chain_lengths[t] + steps
     chain_lengths.arg_max()
 
 @[manual]

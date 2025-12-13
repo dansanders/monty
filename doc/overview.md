@@ -329,7 +329,12 @@ fn baz() -> Void:
 ```monty
 fn foo() -> Void:
     match "Hello, world!":
-        /"Hello, " (name = [A-Z] [a-z]*) "!"/ => print("Name: ${name}")
-        /"Hello, " (num: Int) "!"/ => print("Serial number: ${num}")
-        _ => print("No ID found")
+        /"Hello, " (name = [A-Z][a-z]*) "!"/ =>
+            print("Name: ${name}")
+
+        /"Hello, " (number: Int = [1-9][0-9]*) "!"/ =>
+            print("Serial number: ${number}")
+
+        _ =>
+            print("No ID recognized")
 ```
