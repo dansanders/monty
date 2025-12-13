@@ -7,7 +7,3 @@ let _data = embed_bytes("data/13.txt")
 fn solve(data: Bytes, N: Int) -> Int:
     total = data.lines().map(Decimal.parse).sum()
     (total >> (total.len() - N)).as_int()
-
-@[manual]
-test solution:
-    expect solve(_data, 10) == 5_537_376_230

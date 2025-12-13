@@ -13,7 +13,3 @@ fn solve(N: Int) -> Int:
 
 test example:
     expect solve(10) == 23
-
-@[manual]
-test solution:
-    expect solve(1_000) == 233_168

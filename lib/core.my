@@ -71,7 +71,7 @@ trait Empty:
 # TODO: separator
 # TODO: Can the Str version be made automatic by adding an output step?
 # TODO: This version is only for mutable types. Should that be part of the
-# name/signatue? Is control over Acc necessary?
+# name/signature? Is control over Acc necessary?
 # TODO: Write some examples of use.
 fn join[V -> Acc: Empty + AddAssign[V] = V](it: Iter[V]) -> Acc:
     result = Acc.empty()

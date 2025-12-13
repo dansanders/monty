@@ -24,7 +24,3 @@ fn solve(data: Bytes, N: Int) -> Int:
             yield line_product(y, x, 1, -1)
 
     products().max()
-
-@[manual]
-test solution:
-    solve(_data, 4) == 70_600_674

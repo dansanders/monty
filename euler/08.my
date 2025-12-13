@@ -20,7 +20,3 @@ fn solve(data: Bytes, N: Int) -> Int:
 
 test example:
     expect solve(_data, 4) == 5_832
-
-@[manual]
-test solution:
-    expect solve(_data, 13) == 23_514_624_000

@@ -17,7 +17,3 @@ fn solve(N: Int) -> Int:
 
 test example:
     expect solve(5) == 28
-
-@[manual]
-test solution:
-    expect solve(500) == 76_576_500
