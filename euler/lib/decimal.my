@@ -20,7 +20,7 @@ struct Decimal:
     @[rel(parse)]
     static fn try_parse(digits: Bytes) -> Self?:
         result_digits = List[Int8].empty()
-        for byte in digits.lstrip('0').rev():
+        for byte in digits.lstrip('0'b).rev():
             result_digits.append(Int8.try_parse(byte)?)
 
         Some(Self(result_digits.into_frozen_list()))

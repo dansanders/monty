@@ -1,5 +1,5 @@
-let _data1 = embed("data/10-example.txt")
-let _data2 = embed("data/10.txt")
+let _data1 = embed_str("data/10-example.txt")
+let _data2 = embed_str("data/10.txt")
 let _data = _data2
 
 fn _join(pattern: MX, separator: MX) MX:
