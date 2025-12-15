@@ -1,9 +1,9 @@
 ## Problem 15: Lattice Paths
 
-use std.math.combinatorics
+import std.math
 
 fn solve(N: Int) -> Int:
-    binomial(2 * N, N)
+    math.binomial(2 * N, N)
 
 test example:
     expect solve(2) == 6

@@ -7,17 +7,17 @@ trait RevIter[T]:
 
 trait DoubleEndedIter[T] = Iter[T] + RevIter[T]
 
-use internal.raw_list
+import internal.raw_list
 
 @[opaque]
 struct List[T]:
-    RawList[T]
+    raw_list.RawList[T]
 
     static fn from(it: Iter[T]) -> Self:
         todo
 
     static fn empty() -> Self:
-        Self(RawList[T].empty())
+        Self(raw_list.RawList[T].empty())
 
     @[implicit]
     fn as_bool() -> Bool:

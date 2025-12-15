@@ -1,10 +1,10 @@
 ## Problem 10: Summation of Primes
 
-use std.bit_array
+import std.bit_array
 
 fn solve(N: Int) -> Int:
     fn primes() -> Iter[Int]:
-        composite = BitArray.zeros(N)
+        composite = bit_array.BitArray.zeros(N)
         q = 2
         while composite.try_find(0, q) is Some(p):
             yield p

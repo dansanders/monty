@@ -8,7 +8,7 @@ fn even_palindrome(prefix: Int) -> Int:
     result = prefix
     while prefix:
         prefix, digit = prefix.div_rem(10)
-        result = 10*result + digit
+        result = 10 * result + digit
     result
 
 fn solve(N: Int) -> Int:

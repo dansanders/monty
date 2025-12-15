@@ -1,9 +1,9 @@
-let _data1 = embed_str("data/1-example.txt")
-let _data2 = embed_str("data/1.txt")
-let _data = _data2
+let data1 = embed_str("data/1-example.txt")
+let data2 = embed_str("data/1.txt")
+let data = data2
 
 fn main() -> Void:
-    for line in _data.lines():
+    for line in data.lines():
         amount = Int.parse(line.slice(1))
         match line[0]:
             'L' =>
