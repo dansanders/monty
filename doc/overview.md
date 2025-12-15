@@ -309,17 +309,8 @@ types are placed on the left while required types are placed on the right.
 ## Closures
 
 ```monty
-fn foo(bar: Fn[Int -> Int]) -> Int:
-    bar(5)
-
 fn baz() -> Void:
     a = 10
-
-    fn add_a_1(b: Int) -> Int:
-        a + b
-
-    add_a_2 = |b: Int| a + b
-
-    print(foo(add_a_1))  # prints "15"
-    print(foo(add_a_2))  # prints "15"
+    add = |b: Int| a + b
+    print(add(5))  # prints "15"
 ```
