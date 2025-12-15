@@ -1,23 +1,27 @@
 use std.linear_program
 
-let _data1 = embed_str("data/10-example.txt")
-let _data2 = embed_str("data/10.txt")
-let _data = _data2
+let data1 = embed_str("data/10-example.txt")
+let data2 = embed_str("data/10.txt")
+let data = data2
 
-fn _join(pattern: MX, separator: MX) MX:
-    /(*return = pattern) (separator (*return = pattern))*/
+fn parse_button(button: Str) -> Int:
+    button
+        .remove_affixes("(", ")")
+        .split(",")
+        .map(Int.parse)
 
-let _csv_mx = /return: Int = "0" | [1-9][0-9]*/._join(",")
+fn parse_joltages(joltages: Str) -> Int:
+    joltages
+        .remove_affixes("{", "}")
+        .map(Int.parse)
 
 fn main() -> Void:
     total = 0
     for line in data.lines():
-        expect line is ///
-            "[" ['.' '#']+ "] "
-            ("(" (*buttons = _csv_mx) ") ")+
-            "{" (joltages = _csv_mx) "}"
-        ///
-        
+        _, *button_strs, joltages_str = line.split(" ")
+        buttons = button_strs.map(parse_button)
+        joltages = joltages_str.parse_joltages()
+
         presses_var = LPInt.const(0)
         joltage_vars = Array.new(joltages.len(), |i| LPInt.const(0))
         for i, button in buttons.enumerate():

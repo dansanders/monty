@@ -323,18 +323,3 @@ fn baz() -> Void:
     print(foo(add_a_1))  # prints "15"
     print(foo(add_a_2))  # prints "15"
 ```
-
-## String Matching
-
-```monty
-fn foo() -> Void:
-    match "Hello, world!":
-        /"Hello, " (name = [A-Z][a-z]*) "!"/ =>
-            print("Name: ${name}")
-
-        /"Hello, " (number: Int = [1-9][0-9]*) "!"/ =>
-            print("Serial number: ${number}")
-
-        _ =>
-            print("No ID recognized")
-```
