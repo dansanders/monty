@@ -46,9 +46,9 @@ enum Result[V, E]:
             Ok(v) => v
             Err(e) => panic("$(msg): $(e:?)")
 
-impl[V, E] -> (V ? E) ? E:
+impl[V, E] (V ? E) ? E:
     fn flatten() -> V ? E:
-        t?
+        self?
 
 enum Option[V]:
     Some(V)
@@ -113,7 +113,7 @@ enum Option[V]:
             None, Some(v) => Some(v)
             _ => None
 
-impl[V, E] -> (V ? E)?:
+impl[V, E] (V ? E)?:
     # TODO: Is `V? ? E` acceptable?
     fn transpose() -> (V?) ? E:
         match self:
@@ -121,7 +121,7 @@ impl[V, E] -> (V ? E)?:
             Some(Err(e)) => Err(e)
             None => Ok(None)
 
-impl[V, E] -> (V?) ? E:
+impl[V, E] (V?) ? E:
     fn transpose() -> (V ? E)?:
         match self:
             Ok(Some(v)) => Some(Ok(v))

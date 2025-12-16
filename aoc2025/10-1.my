@@ -27,7 +27,7 @@ fn main() -> Void:
             for prev_lights, prev_presses in prev_states:
                 lights = prev_lights ^ button
                 presses = prev_presses + 1
-                match lights in states:
+                match lights.contains(states):
                     true => states[lights] = min(states[lights], presses)
                     false => states[lights] = presses
         total += states[target_str.parse_lights()]
