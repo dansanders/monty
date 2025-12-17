@@ -27,7 +27,7 @@ struct Decimal:
 
     @[panics, rel(try_parse)]
     static fn parse(digits: Bytes) -> Self:
-        Self.try_parse(digits).value_or_panic()
+        Self.try_parse(digits).expect()
 
     static fn add(a: Self, b: Self) -> Self:
         var a = a.digits
@@ -79,4 +79,4 @@ struct Decimal:
 
     @[panics, rel(try_as_int)]
     fn as_int() -> Int:
-        self.try_as_int().value_or_panic()
+        self.try_as_int().expect()

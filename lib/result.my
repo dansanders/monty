@@ -1,4 +1,3 @@
-# TODO: Comparison operators.
 enum Result[V, E]:
     Ok(V)
     Err(E)
@@ -41,14 +40,25 @@ enum Result[V, E]:
 
     # TODO: Use the caller location in the panic message.
     # TODO: What msg type to accept? String view? Template string?
-    fn value_or_panic(msg: str = "unexpected Err") -> V:
+    # TODO: Can the default message include the type?
+    @[panics]
+    fn expect(msg: str = "Ok") -> V:
         match self:
             Ok(v) => v
-            Err(e) => panic("$(msg): $(e:?)")
+            Err(_) => panic("expected ${panic_msg}, found ${self}")
 
-impl[V, E] (V ? E) ? E:
-    fn flatten() -> V ? E:
-        self?
+    # TODO: Make it clear that T is a new type variable and E is a known type.
+    # TODO: How do you make a method conditional on a trait?
+    if V is T ? E:
+        fn flatten[T]() -> T ? E:
+            self?
+
+    if V is T?:
+        fn transpose() -> (T ? E)?:
+            match self:
+                Ok(Some(v)) => Some(Ok(v))
+                Ok(None) => None
+                Err(e) => Some(Err(e))
 
 enum Option[V]:
     Some(V)
@@ -92,10 +102,11 @@ enum Option[V]:
             Some(v) => v
             _ => default
 
-    fn value_or_panic(msg: str = "unexpected None") -> V:
+    @[panics]
+    fn expect(msg: str = "Some") -> V:
         match self:
             Some(v) => v
-            _ => panic(msg)
+            _ => panic("expected ${msg}, found None")
 
     fn filter(f: Fn[V -> Bool]) -> V?:
         match self:
@@ -113,17 +124,9 @@ enum Option[V]:
             None, Some(v) => Some(v)
             _ => None
 
-impl[V, E] (V ? E)?:
-    # TODO: Is `V? ? E` acceptable?
-    fn transpose() -> (V?) ? E:
-        match self:
-            Some(Ok(v)) => Ok(Some(v))
-            Some(Err(e)) => Err(e)
-            None => Ok(None)
-
-impl[V, E] (V?) ? E:
-    fn transpose() -> (V ? E)?:
-        match self:
-            Ok(Some(v)) => Some(Ok(v))
-            Ok(None) => None
-            Err(e) => Some(Err(e))
+    if V is T ? E:
+        fn transpose() -> (T?) ? E:
+            match self:
+                Some(Ok(v)) => Ok(Some(v))
+                Some(Err(e)) => Err(e)
+                None => Ok(None)

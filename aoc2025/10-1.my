@@ -20,9 +20,12 @@ fn main() -> Void:
     total = 0
     for line in data.lines():
         target_str, *button_strs, _ = line.split(" ")
+        target = target_str.parse_lights()
+        buttons = button_strs.map(parse_button)
+
         states = Map[Int -> Int]()
         states[0] = 0
-        for button in button_strs.map(parse_button):
+        for button in buttons:
             prev_states = states.copy()
             for prev_lights, prev_presses in prev_states:
                 lights = prev_lights ^ button
@@ -30,5 +33,5 @@ fn main() -> Void:
                 match lights.contains(states):
                     true => states[lights] = min(states[lights], presses)
                     false => states[lights] = presses
-        total += states[target_str.parse_lights()]
+        total += states[target]
     print(total)

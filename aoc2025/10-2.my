@@ -13,6 +13,7 @@ fn parse_button(button: Str) -> Int:
 fn parse_joltages(joltages: Str) -> Int:
     joltages
         .remove_affixes("{", "}")
+        .split(",")
         .map(Int.parse)
 
 fn main() -> Void:
@@ -23,7 +24,7 @@ fn main() -> Void:
         joltages = joltages_str.parse_joltages()
 
         presses_var = lp.LPInt.const(0)
-        joltage_vars = Array.new(joltages.len(), |i| lp.LPInt.const(0))
+        joltage_vars = Array.new(joltages.len(), |_| lp.LPInt.const(0))
         for i, button in buttons.enumerate():
             button_var = lp.LPInt.new("b${i}", min: 0)
             presses_var += button_var
