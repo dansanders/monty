@@ -37,7 +37,7 @@ fn collect[V -> C: FromIter[V]](it: Iter[V]) -> C:
     C::from(it)
 
 fn try_collect[V, T: Try[V] -> C: FromIter[V]](it: Iter[V]) -> T::AsTry[C]:
-    it.try_process(|i: Iter[V]| it.collect[C]())
+    it.try_process(|i| i.collect[C]())
 
 # Numbers
 trait Zero:
@@ -53,7 +53,7 @@ fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
     result
 
 fn try_sum[V, T: Try[V] -> Acc: Zero + AddAssign[V] = V](it: Iter[T]) -> T::AsTry[Acc]:
-    it.try_process(|i: Iter[V]| i.sum[Acc]())
+    it.try_process(|i| i.sum[Acc]())
 
 trait CheckAdd[V]:
     fn check_add(V) -> Self?
@@ -80,7 +80,7 @@ fn join[V -> Acc: Empty + AddAssign[V] = V](it: Iter[V]) -> Acc:
     result
 
 fn try_join[V, T: Try[V] -> Acc: Empty + AddAssign[V] = V](it: Iter[T]) -> T::AsTry[Acc]:
-    it.try_process(|i: Iter[V]| i.join[Acc]())
+    it.try_process(|i| i.join[Acc]())
 
 # TODO: Overload priority.
 # TODO: Precalculate storage.
@@ -90,4 +90,4 @@ fn join(it: Iter[Str]) -> Str:
     StrBuf::from(it).into_str()
 
 fn try_join[T: Try[Str]](it: Iter[T]) -> T:
-    it.try_process(|i: Iter[Str]| i.join())
+    it.try_process(|i| i.join())

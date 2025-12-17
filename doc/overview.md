@@ -311,6 +311,6 @@ types are placed on the left while required types are placed on the right.
 ```monty
 fn baz() -> Void:
     a = 10
-    add = |b: Int| a + b
+    add = |b| a + b
     print(add(5))  # prints "15"
 ```
