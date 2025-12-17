@@ -1,4 +1,4 @@
-import std.lp
+import std::lp
 
 let data1 = embed_str("data/10-example.txt")
 let data2 = embed_str("data/10.txt")
@@ -23,15 +23,15 @@ fn main() -> Void:
         buttons = button_strs.map(parse_button)
         joltages = joltages_str.parse_joltages()
 
-        presses_var = lp.LPInt.const(0)
-        joltage_vars = Array.new(joltages.len(), |_| lp.LPInt.const(0))
+        presses_var = lp::LPInt::const(0)
+        joltage_vars = Array.new(joltages.len(), |_| lp::LPInt::const(0))
         for i, button in buttons.enumerate():
-            button_var = lp.LPInt.new("b${i}", min: 0)
+            button_var = lp::LPInt::new("b${i}", min: 0)
             presses_var += button_var
             for j in button:
                 joltage_vars[j] += button_var
 
-        problem = lp.LPProblem.minimize(presses_var)
+        problem = lp::LPProblem::minimize(presses_var)
         for i, joltage in joltages.enumerate():
             problem.add_constraint(joltage_vars[i] == joltage)
 

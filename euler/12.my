@@ -1,6 +1,6 @@
 ## Problem 12: Highly Divisible Triangular Number
 
-import sieve.divisor_count
+import sieve::divisor_count
 
 fn divide_even(n: Int) -> Int:
     match 2.divides(n):
@@ -9,9 +9,9 @@ fn divide_even(n: Int) -> Int:
 
 fn solve(N: Int) -> Int:
     # TODO: Initialize our own sieve instance?
-    b = divisor_count.divisor_count(1)
+    b = divisor_count::divisor_count(1)
     for n in count(1):
-        a, b = b, divisor_count.divisor_count(divide_even(n + 1))
+        a, b = b, divisor_count::divisor_count(divide_even(n + 1))
         if a * b > N:
             return n * (n + 1) / 2
     unreachable

@@ -7,7 +7,7 @@ struct Decimal:
         # TODO: Implement sign.
         expect value >= 0
 
-        result_digits = List[Int8].empty()
+        result_digits = List[Int8]::empty()
         while value:
             value, digit = value.div_mod(10)
             result_digits.append(digit)
@@ -15,19 +15,19 @@ struct Decimal:
         Self(result_digits.into_frozen_list())
 
     static fn zero() -> Self:
-        Self(FrozenList[Int8].empty())
+        Self(FrozenList[Int8]::empty())
 
     @[rel(parse)]
     static fn try_parse(digits: Bytes) -> Self?:
-        result_digits = List[Int8].empty()
+        result_digits = List[Int8]::empty()
         for byte in digits.lstrip('0'b).rev():
-            result_digits.append(Int8.try_parse(byte)?)
+            result_digits.append(Int8::try_parse(byte)?)
 
         Some(Self(result_digits.into_frozen_list()))
 
     @[panics, rel(try_parse)]
     static fn parse(digits: Bytes) -> Self:
-        Self.try_parse(digits).expect()
+        Self::try_parse(digits).expect()
 
     static fn add(a: Self, b: Self) -> Self:
         var a = a.digits
@@ -35,7 +35,7 @@ struct Decimal:
         if a.len() < b.len():
             a, b = b, a
 
-        result_digits = List[Int8].empty()
+        result_digits = List[Int8]::empty()
         carry = 0_i8
         for i in 0.up_to(b.len() - 1):
             total = a[i] + b[i] + carry

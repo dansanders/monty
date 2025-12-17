@@ -4,7 +4,7 @@ let _data = embed_bytes("data/8.txt")
 
 fn solve(data: Bytes, N: Int) -> Int:
     fn products(digits: Iter[Int8]) -> Iter[Int]:
-        bins = Array.repeat(1, N)
+        bins = Array::repeat(1, N)
         for i, digit in digits.enumerate():
             for j in 0.up_to(N - 1):
                 bins[j] *= digit
@@ -14,7 +14,7 @@ fn solve(data: Bytes, N: Int) -> Int:
 
     data
         .filter(|b: Byte| !b.is_whitespace())
-        .map(Int8.parse)
+        .map(Int8::parse)
         .products()
         .max()
 

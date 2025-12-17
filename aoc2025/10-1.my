@@ -7,14 +7,14 @@ fn parse_lights(lights: Str) -> Int:
         .remove_affixes("[", "]")
         .find_all("#")
         .map(|i| 1 << i)
-        .fold(0, Int.bit_or)
+        .fold(0, Int::bit_or)
 
 fn parse_button(button: Str) -> Int:
     button
         .remove_affixes("(", ")")
         .split(",")
-        .map(|s| 1 << Int.parse(s))
-        .fold(0, Int.bit_or)
+        .map(|s| 1 << Int::parse(s))
+        .fold(0, Int::bit_or)
 
 fn main() -> Void:
     total = 0

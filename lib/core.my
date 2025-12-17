@@ -7,17 +7,17 @@ trait RevIter[T]:
 
 trait DoubleEndedIter[T] = Iter[T] + RevIter[T]
 
-import internal.raw_list
+import internal::raw_list
 
 @[opaque]
 struct List[T]:
-    raw_list.RawList[T]
+    raw_list::RawList[T]
 
     static fn from(it: Iter[T]) -> Self:
         todo
 
     static fn empty() -> Self:
-        Self(raw_list.RawList[T].empty())
+        Self(raw_list::RawList[T]::empty())
 
     @[implicit]
     fn as_bool() -> Bool:
@@ -34,9 +34,9 @@ trait FromIter[T]:
     static fn from(it: Iter[T]) -> Self
 
 fn collect[V -> C: FromIter[V]](it: Iter[V]) -> C:
-    C.from(it)
+    C::from(it)
 
-fn try_collect[V, T: Try[V] -> C: FromIter[V]](it: Iter[V]) -> T.AsTry[C]:
+fn try_collect[V, T: Try[V] -> C: FromIter[V]](it: Iter[V]) -> T::AsTry[C]:
     it.try_process(|i: Iter[V]| it.collect[C]())
 
 # Numbers
@@ -47,19 +47,19 @@ trait Zero:
 # `add_assign(V) -> Void`, or by a mutable binding that is
 # `Add[V -> Self]`.
 fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
-    result = Acc.zero()
+    result = Acc::zero()
     for value in it:
         result += value
     result
 
-fn try_sum[V, T: Try[V] -> Acc: Zero + AddAssign[V] = V](it: Iter[T]) -> T.AsTry[Acc]:
+fn try_sum[V, T: Try[V] -> Acc: Zero + AddAssign[V] = V](it: Iter[T]) -> T::AsTry[Acc]:
     it.try_process(|i: Iter[V]| i.sum[Acc]())
 
 trait CheckAdd[V]:
     fn check_add(V) -> Self?
 
 fn check_sum[V -> Acc: Zero + CheckAdd[V] = V](it: Iter[V]) -> Acc?:
-    result = Acc.zero()
+    result = Acc::zero()
     for value in it:
         result = result.check_add(value)?
     result
@@ -74,12 +74,12 @@ trait Empty:
 # name/signature? Is control over Acc necessary?
 # TODO: Write some examples of use.
 fn join[V -> Acc: Empty + AddAssign[V] = V](it: Iter[V]) -> Acc:
-    result = Acc.empty()
+    result = Acc::empty()
     for value in it:
         result += value
     result
 
-fn try_join[V, T: Try[V] -> Acc: Empty + AddAssign[V] = V](it: Iter[T]) -> T.WithOutputType[Acc]:
+fn try_join[V, T: Try[V] -> Acc: Empty + AddAssign[V] = V](it: Iter[T]) -> T::AsTry[Acc]:
     it.try_process(|i: Iter[V]| i.join[Acc]())
 
 # TODO: Overload priority.
@@ -87,7 +87,7 @@ fn try_join[V, T: Try[V] -> Acc: Empty + AddAssign[V] = V](it: Iter[T]) -> T.Wit
 # TODO: Other immutable types also need an intermediate buffer. Can this
 # pattern be generalized?
 fn join(it: Iter[Str]) -> Str:
-    StrBuf.from(it).into_str()
+    StrBuf::from(it).into_str()
 
 fn try_join[T: Try[Str]](it: Iter[T]) -> T:
     it.try_process(|i: Iter[Str]| i.join())

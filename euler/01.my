@@ -1,6 +1,6 @@
 ## Problem 1: Multiples of 3 or 5
 
-import std.math
+import std::math
 
 fn triangle(n: Int) -> Int:
     n * (n + 1) / 2
@@ -9,7 +9,7 @@ fn solve(N: Int) -> Int:
     fn sum_multiples(n: Int) -> Int:
         n * triangle((N - 1) / n)
 
-    sum_multiples(3) + sum_multiples(5) - sum_multiples(math.lcm(3, 5))
+    sum_multiples(3) + sum_multiples(5) - sum_multiples(math::lcm(3, 5))
 
 test example:
     expect solve(10) == 23

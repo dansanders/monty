@@ -3,7 +3,7 @@
 fn solve(N: Int) -> Int:
     # TODO: Can this be rewritten as an array initialization?
     # TODO: Consider fusing arg_max() with computation.
-    chain_lengths = Array[Int].zeros(N)
+    chain_lengths = Array[Int]::zeros(N)
     for n in 2.to(N - 1):
         if 2.divides(n):
             chain_lengths[n] = chain_lengths[n / 2] + 1

@@ -4,7 +4,7 @@ let data = data2
 
 fn main() -> Void:
     for line in data.lines():
-        amount = Int.parse(line.slice(1))
+        amount = Int::parse(line.slice(1))
         match line[0]:
             'L' =>
                 match dial:

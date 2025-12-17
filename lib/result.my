@@ -4,7 +4,7 @@ enum Result[V, E]:
 
     test implements_try:
         fn f[V, E](x: V ? E) -> V ? E:
-            (V ? E).from_value(x?)
+            (V ? E)::from_value(x?)
 
     type AsTry[T] = T ? E
 
@@ -66,7 +66,7 @@ enum Option[V]:
 
     test implements_try:
         fn f[V](x: V?) -> V?:
-            (V?).from_value(x?)
+            (V?)::from_value(x?)
 
     type AsTry[T] = T?
 

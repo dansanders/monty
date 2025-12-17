@@ -254,7 +254,7 @@ enum Foo:
     Baz(Int, Int)
 
 fn main() -> Void:
-    x = Foo.Bar(5)
+    x = Foo::Bar(5)
     match x:
         Bar(y) => print(y)
         Baz(a, b) => print(a, b)
@@ -272,7 +272,7 @@ The try operator `?` unwraps values, returning errors immediately.
 fn safe_div(dividend: Int, divisor: Int) -> Int ? Str:
     if divisor == 0:
         return Err("division by zero")
-    if divisor == -1 and dividend == Int.min_value:
+    if divisor == -1 and dividend == Int::min_value:
         return Err("integer overflow")
     Ok(dividend / divisor)
 
@@ -284,13 +284,13 @@ fn foo() -> Int ? Str:
 
 ```monty
 fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
-    result = Acc.zero()
+    result = Acc::zero()
     for value in it:
         result += value
     result
 
 fn main() -> Void:
-    a = List[Int32].from(1.up_to(10))
+    a = List[Int32]::from(1.up_to(10))
     x = a.sum()         # x has type Int32
     y = a.sum[Int64]()  # y has type Int64
 ```

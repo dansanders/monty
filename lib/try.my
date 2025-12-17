@@ -4,18 +4,18 @@ trait Try[V, E]:
     static fn from_error(error: E) Self
     fn as_result() Result[V, E]
 
-fn try_process[T: Try, R](it: Iter[T], f: Fn[Iter[T.Output] -> R]) T.AsTry[R]:
+fn try_process[T: Try, R](it: Iter[T], f: Fn[Iter[T::Output] -> R]) T::AsTry[R]:
     helper = _try_process_helper(it)
     result = f(helper.iter())
     match helper.err:
-        Some(e) => T.AsTry[R].from_error(e)
-        None => T.AsTry[T].from_value(result)
+        Some(e) => T::AsTry[R]::from_error(e)
+        None => T::AsTry[T]::from_value(result)
 
 struct _try_process_helper[T: Try]:
     it: Iter[T]
-    var err: T.E? = None
+    var err: T::E? = None
 
-    fn iter() -> Iter[T.Output]:
+    fn iter() -> Iter[T::Output]:
         for value in it:
             match value.as_result():
                 Ok(v) =>
