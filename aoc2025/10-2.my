@@ -1,8 +1,8 @@
 import std::lp
 
-let data1 = embed_str("data/10-example.txt")
-let data2 = embed_str("data/10.txt")
-let data = data2
+data1 = embed_str("data/10-example.txt")
+data2 = embed_str("data/10.txt")
+data = data2
 
 fn parse_button(button: Str) -> Int:
     button

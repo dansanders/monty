@@ -2,7 +2,7 @@
 
 import decimal
 
-let _data = embed_bytes("data/13.txt")
+_data = embed_bytes("data/13.txt")
 
 fn solve(data: Bytes, N: Int) -> Int:
     total = data.lines().map(decimal::Decimal::parse).sum()

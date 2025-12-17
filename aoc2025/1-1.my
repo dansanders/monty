@@ -1,6 +1,6 @@
-let data1 = embed_str("data/1-example.txt")
-let data2 = embed_str("data/1.txt")
-let data = data2
+data1 = embed_str("data/1-example.txt")
+data2 = embed_str("data/1.txt")
+data = data2
 
 fn main() -> Void:
     # TODO: Can `dial` be of type ZZ[100]?
