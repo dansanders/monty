@@ -7,10 +7,10 @@ trait RevIter[T]:
 
 trait DoubleEndedIter[T] = Iter[T] + RevIter[T]
 
-import internal::raw_list
-
 @[opaque]
 struct List[T]:
+    import internal::raw_list
+
     raw_list::RawList[T]
 
     static fn from(it: Iter[T]) -> Self:

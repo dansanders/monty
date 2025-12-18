@@ -276,7 +276,7 @@ fn safe_div(dividend: Int, divisor: Int) -> Int ? Str:
         return Err("integer overflow")
     Ok(dividend / divisor)
 
-fn foo() -> Int ? Str:
+fn call_safe_div() -> Int ? Str:
     Ok(5.safe_div(3)?.safe_div(0)?)
 ```
 
@@ -309,8 +309,24 @@ types are placed on the left while required types are placed on the right.
 ## Closures
 
 ```monty
-fn baz() -> Void:
+fn call_closure() -> Void:
     a = 10
     add = |b| a + b
     print(add(5))  # prints "15"
+```
+
+## Advanced String Parsing
+
+```monty
+fn parse_expression() -> Void:
+    grammar = \\\
+        expr: <term> ("+" <expr>)? => sum
+        term: <factor> ("*" <expr>)? => product
+        factor: whitespace (<number> | <paren>) whitespace
+        number: "0" | [1-9][0-9]* => Int.parse
+        paren: "(" <expr> ")"
+        whitespace: " "*
+    \\\
+
+    print(grammar.parse("1 + (2 + 3) * 4"))  # prints "21"
 ```
