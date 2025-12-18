@@ -277,7 +277,7 @@ fn safe_div(dividend: Int, divisor: Int) -> Int ? Str:
     Ok(dividend / divisor)
 
 fn call_safe_div() -> Int ? Str:
-    Ok(5.safe_div(3)?.safe_div(0)?)
+    Ok(5.safe_div(3)?.safe_div(0)?)  # returns Err("division by zero")
 ```
 
 ## Generics

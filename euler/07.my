@@ -4,8 +4,9 @@ import std::bit_array
 import std::math
 
 fn solve(N: Int) -> Int:
+    use math::ln
     # TODO: Fix upper bound for N < 6.
-    scale = math::ln(N) + math::ln(math::ln(N))
+    scale = ln(N) + ln(ln(N))
     upper_bound = (N * scale).as_int()
     composite = bit_array::BitArray::zeros(upper_bound + 1)
     p = 2

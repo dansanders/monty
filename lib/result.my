@@ -47,13 +47,11 @@ enum Result[V, E]:
             Ok(v) => v
             Err(_) => panic("expected ${panic_msg}, found ${self}")
 
-    # TODO: Make it clear that T is a new type variable and E is a known type.
-    # TODO: How do you make a method conditional on a trait?
-    if V is T ? E:
-        fn flatten[T]() -> T ? E:
+    when[T] V == T ? E:
+        fn flatten() -> V:
             self?
 
-    if V is T?:
+    when[T] V == T?:
         fn transpose() -> (T ? E)?:
             match self:
                 Ok(Some(v)) => Some(Ok(v))
@@ -124,7 +122,7 @@ enum Option[V]:
             None, Some(v) => Some(v)
             _ => None
 
-    if V is T ? E:
+    when[T] V == T ? E:
         fn transpose() -> (T?) ? E:
             match self:
                 Some(Ok(v)) => Ok(Some(v))
