@@ -315,18 +315,18 @@ fn call_closure() -> Void:
     print(add(5))  # prints "15"
 ```
 
-## Advanced String Parsing
+## PEG-based String Parsing
 
 ```monty
 fn parse_expression() -> Void:
-    grammar = \\\
+    grammar = ///
         expr: <term> ("+" <expr>)? => sum
         term: <factor> ("*" <expr>)? => product
         factor: whitespace (<number> | <paren>) whitespace
         number: "0" | [1-9][0-9]* => Int::parse
         paren: "(" <expr> ")"
         whitespace: " "*
-    \\\
+    ///
 
     print(grammar.parse("1 + (2 + 3) * 4"))  # prints "21"
 ```
