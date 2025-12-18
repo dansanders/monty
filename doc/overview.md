@@ -321,7 +321,7 @@ fn call_closure() -> Void:
 fn parse_expression() -> Void:
     grammar = ///
         expr: <term> ("+" <expr>)? => sum
-        term: <factor> ("*" <expr>)? => product
+        term: <factor> ("*" <term>)? => product
         factor: whitespace (<number> | <paren>) whitespace
         number: "0" | [1-9][0-9]* => Int::parse
         paren: "(" <expr> ")"
