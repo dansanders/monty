@@ -323,7 +323,7 @@ fn parse_expression() -> Void:
         expr: <term> ("+" <expr>)? => sum
         term: <factor> ("*" <expr>)? => product
         factor: whitespace (<number> | <paren>) whitespace
-        number: "0" | [1-9][0-9]* => Int.parse
+        number: "0" | [1-9][0-9]* => Int::parse
         paren: "(" <expr> ")"
         whitespace: " "*
     \\\
