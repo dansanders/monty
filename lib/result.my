@@ -6,7 +6,7 @@ enum Result[V, E]:
         fn f[V, E](x: V ? E) -> V ? E:
             (V ? E)::from_value(x?)
 
-    type AsTry[T] = T ? E
+    type AsTry[W] = W ? E
 
     static fn from_value(value: V) -> Self:
         Ok(value)
@@ -42,17 +42,17 @@ enum Result[V, E]:
     # TODO: What msg type to accept? String view? Template string?
     # TODO: Can the default message include the type?
     @[panics]
-    fn expect(msg: str = "Ok") -> V:
+    fn expect(msg: Str = "Ok") -> V:
         match self:
             Ok(v) => v
             Err(_) => panic("expected ${panic_msg}, found ${self}")
 
-    when[T] V == T ? E:
-        fn flatten() -> V:
+    impl[W] if Self == (W ? E) ? E:
+        fn flatten() -> W ? E:
             self?
 
-    when[T] V == T?:
-        fn transpose() -> (T ? E)?:
+    impl[W] if Self == (W?) ? E:
+        fn transpose() -> (W ? E)?:
             match self:
                 Ok(Some(v)) => Some(Ok(v))
                 Ok(None) => None
@@ -101,7 +101,7 @@ enum Option[V]:
             _ => default
 
     @[panics]
-    fn expect(msg: str = "Some") -> V:
+    fn expect(msg: Str = "Some") -> V:
         match self:
             Some(v) => v
             _ => panic("expected ${msg}, found None")
@@ -122,8 +122,8 @@ enum Option[V]:
             None, Some(v) => Some(v)
             _ => None
 
-    when[T] V == T ? E:
-        fn transpose() -> (T?) ? E:
+    impl[W] if Self == (W ? E)?:
+        fn transpose() -> (W?) ? E:
             match self:
                 Some(Ok(v)) => Ok(Some(v))
                 Some(Err(e)) => Err(e)

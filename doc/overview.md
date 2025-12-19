@@ -222,9 +222,9 @@ struct MyInt:
 
     static fn cmp(a: Self, b: Self) -> Ord:
         match:
-            if a.0 < b.0 => Lt
-            if a.0 > b.0 => Gt
-            _ => Eq
+            if a.0 < b.0 => Ord::Lt
+            if a.0 > b.0 => Ord::Gt
+            _ => Ord::Eq
 
 fn main() -> Void:
     a, b = MyInt(5), MyInt(10)
@@ -256,8 +256,8 @@ enum Foo:
 fn main() -> Void:
     x = Foo::Bar(5)
     match x:
-        Bar(y) => print(y)
-        Baz(a, b) => print(a, b)
+        Foo::Bar(y) => print(y)
+        Foo::Baz(a, b) => print(a, b)
 ```
 
 ## Error Handling
@@ -320,12 +320,12 @@ fn call_closure() -> Void:
 ```monty
 fn parse_expression() -> Void:
     grammar = ///
-        expr: <term> ("+" <expr>)? => sum
-        term: <factor> ("*" <term>)? => product
-        factor: whitespace (<number> | <paren>) whitespace
-        number: "0" | [1-9][0-9]* => Int::parse
+        expr: <term> ("+" <expr>)? -> sum
+        term: <factor> ("*" <term>)? -> product
+        factor: ws (<number> | <paren>) ws
+        number: "0" | [1-9][0-9]* -> Int::parse
         paren: "(" <expr> ")"
-        whitespace: " "*
+        ws: " "*
     ///
 
     print(grammar.parse("1 + (2 + 3) * 4"))  # prints "21"
