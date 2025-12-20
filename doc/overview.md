@@ -322,7 +322,7 @@ fn parse_expression() -> Void:
     grammar = ///
         expr: <term> ("+" <expr>)? -> sum
         term: <factor> ("*" <term>)? -> product
-        factor: ws (<number> | <paren>) ws
+        factor: ws <number | paren> ws
         number: "0" | [1-9][0-9]* -> Int::parse
         paren: "(" <expr> ")"
         ws: " "*

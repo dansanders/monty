@@ -4,24 +4,24 @@ data = data2
 
 fn parse_lights(lights: Str) -> Int:
     lights
-        .remove_affixes("[", "]")
         .find_all("#")
-        .map(|i| 1 << i)
-        .fold(0, Int::bit_or)
+        .parse_button()
 
-fn parse_button(button: Str) -> Int:
+fn parse_button(button: Iter[Int]) -> Int:
     button
-        .remove_affixes("(", ")")
-        .split(",")
-        .map(|s| 1 << Int::parse(s))
+        .map(|i| 1 << i)
         .fold(0, Int::bit_or)
 
 fn main() -> Void:
     total = 0
     for line in data.lines():
-        target_str, *button_strs, _ = line.split(" ")
-        target = target_str.parse_lights()
-        buttons = button_strs.map(parse_button)
+        target, buttons = ///
+            "[" <lights> "]", (" " <button>)+ " {" csv "}"
+            lights: [.#]+ -> parse_lights
+            button: "(" <csv> ")" -> parse_button
+            csv: <int> ("," <int>)*
+            int: "0" | [1-9][0-9]* -> Int::parse
+        ///.parse(line)
 
         states = Map[Int -> Int]()
         states[0] = 0
@@ -30,7 +30,7 @@ fn main() -> Void:
             for prev_lights, prev_presses in prev_states:
                 lights = prev_lights ^ button
                 presses = prev_presses + 1
-                match lights.contains(states):
+                match states.contains(lights):
                     true => states[lights] = min(states[lights], presses)
                     false => states[lights] = presses
         total += states[target]

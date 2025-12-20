@@ -4,14 +4,14 @@ data = data2
 
 fn main() -> Void:
     for line in data.lines():
-        amount = Int::parse(line.slice(1))
-        match line[0]:
-            'L' =>
+        dir, amount = /<[LR]>, <[1-9][0-9]* -> Int::parse>/.parse(line)
+        match dir:
+            "L" =>
                 match dial:
                     0 => count += amount / 100
                     _ => count += (100 - dial + amount) / 100
                 dial = (dial - amount).mod(100)
-            'R' =>
+            "R" =>
                 count += (dial + amount) / 100
                 dial = (dial + amount).mod(100)
             _ =>

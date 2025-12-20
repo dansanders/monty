@@ -7,10 +7,10 @@ fn main() -> Void:
     dial = 50
     count = 0
     for line in data.lines():
-        amount = Int::parse(line.slice(1))
-        match line[0]:
-            'L' => dial = (dial - amount).mod(100)
-            'R' => dial = (dial + amount).mod(100)
+        dir, amount = /<[LR]>, <[1-9][0-9]* -> Int::parse>/.parse(line)
+        match dir:
+            "L" => dial = (dial - amount).mod(100)
+            "R" => dial = (dial + amount).mod(100)
             _ => unreachable
         if dial == 0:
             count += 1

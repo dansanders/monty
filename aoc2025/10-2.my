@@ -4,27 +4,18 @@ data1 = embed_str("data/10-example.txt")
 data2 = embed_str("data/10.txt")
 data = data2
 
-fn parse_button(button: Str) -> Int:
-    button
-        .remove_affixes("(", ")")
-        .split(",")
-        .map(Int::parse)
-
-fn parse_joltages(joltages: Str) -> Int:
-    joltages
-        .remove_affixes("{", "}")
-        .split(",")
-        .map(Int::parse)
-
 fn main() -> Void:
     total = 0
     for line in data.lines():
-        _, *button_strs, joltages_str = line.split(" ")
-        buttons = button_strs.map(parse_button)
-        joltages = joltages_str.parse_joltages()
+        buttons, joltages = ///
+            "[" [.#]+ "]" (" " <button>)+, " {" <csv> "}"
+            button: "(" <csv> ")"
+            csv: <int> ("," <int>)*
+            int: "0" | [1-9][0-9]* -> Int::parse
+        ///.parse(line)
 
         presses_var = lp::LPInt::const(0)
-        joltage_vars = Array.new(joltages.len(), |_| lp::LPInt::const(0))
+        joltage_vars = Array::new(joltages.len(), |_| lp::LPInt::const(0))
         for i, button in buttons.enumerate():
             button_var = lp::LPInt::new("b${i}", min: 0)
             presses_var += button_var
