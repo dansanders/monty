@@ -6,7 +6,7 @@ enum Result[V, E]:
         fn f[V, E](x: V ? E) -> V ? E:
             (V ? E)::from_value(x?)
 
-    type AsTry[W] = W ? E
+    type With[W] = W ? E
 
     static fn from_value(value: V) -> Self:
         Ok(value)
@@ -14,7 +14,7 @@ enum Result[V, E]:
     static fn from_error(error: E) -> Self:
         Err(error)
 
-    fn as_result() -> Self:
+    fn to_result() -> Self:
         self
 
     fn is_ok() -> Bool:
@@ -47,11 +47,11 @@ enum Result[V, E]:
             Ok(v) => v
             Err(_) => panic("expected ${panic_msg}, found ${self}")
 
-    impl[W] if Self == (W ? E) ? E:
+    impl[W] where Self == (W ? E) ? E:
         fn flatten() -> W ? E:
             self?
 
-    impl[W] if Self == (W?) ? E:
+    impl[W] where Self == (W?) ? E:
         fn transpose() -> (W ? E)?:
             match self:
                 Ok(Some(v)) => Some(Ok(v))
@@ -66,7 +66,7 @@ enum Option[V]:
         fn f[V](x: V?) -> V?:
             (V?)::from_value(x?)
 
-    type AsTry[T] = T?
+    type With[T] = T?
 
     fn from_value(value: V) -> Self:
         Some(value)
@@ -74,7 +74,7 @@ enum Option[V]:
     fn from_error(error: Void) -> Self:
         None
 
-    fn as_result() -> Result[V, Void]:
+    fn to_result() -> Result[V, Void]:
         match self:
             Some(v) => Ok(v)
             None => Err(Void)
@@ -122,7 +122,7 @@ enum Option[V]:
             None, Some(v) => Some(v)
             _ => None
 
-    impl[W] if Self == (W ? E)?:
+    impl[W] where Self == (W ? E)?:
         fn transpose() -> (W?) ? E:
             match self:
                 Some(Ok(v)) => Ok(Some(v))

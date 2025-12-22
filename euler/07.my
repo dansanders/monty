@@ -7,7 +7,7 @@ fn solve(N: Int) -> Int:
     use math::ln
     # TODO: Fix upper bound for N < 6.
     scale = ln(N) + ln(ln(N))
-    upper_bound = (N * scale).as_int()
+    upper_bound = (N * scale).to_int()
     composite = bit_array::BitArray::zeros(upper_bound + 1)
     p = 2
     for _ in 0.up_to(N - 2):

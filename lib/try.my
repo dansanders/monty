@@ -1,17 +1,17 @@
 trait Try[V, E]:
-    type AsTry[W]: Try[W, E]
+    type With[W]: Try[W, E]
 
     static fn from_value(value: V) Self
     static fn from_error(error: E) Self
 
-    fn as_result() Result[V, E]
+    fn to_result() Result[V, E]
 
-fn try_process[T: Try, R](it: Iter[T], f: Fn[Iter[T::V] -> R]) T::AsTry[R]:
+fn try_process[T: Try, R](it: Iter[T], f: Fn[Iter[T::V] -> R]) T::With[R]:
     helper = _try_process_helper(it)
     result = f(helper.iter())
     match helper.err:
-        Some(e) => T::AsTry[R]::from_error(e)
-        None => T::AsTry[R]::from_value(result)
+        Some(e) => T::With[R]::from_error(e)
+        None => T::With[R]::from_value(result)
 
 struct _try_process_helper[T: Try]:
     it: Iter[T]
@@ -19,7 +19,7 @@ struct _try_process_helper[T: Try]:
 
     fn iter() -> Iter[T::V]:
         for value in it:
-            match value.as_result():
+            match value.to_result():
                 Ok(v) =>
                     yield v
                 Err(e) =>

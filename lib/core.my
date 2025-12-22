@@ -20,7 +20,7 @@ struct List[T]:
         Self(raw_list::RawList[T]::empty())
 
     @[implicit]
-    fn as_bool() -> Bool:
+    fn to_bool() -> Bool:
         self.0.len()
 
     @[implicit]
@@ -36,7 +36,7 @@ trait FromIter[T]:
 fn collect[V -> C: FromIter[V]](it: Iter[V]) -> C:
     C::from(it)
 
-fn try_collect[V, T: Try[V] -> C: FromIter[V]](it: Iter[V]) -> T::AsTry[C]:
+fn try_collect[V, T: Try[V] -> C: FromIter[V]](it: Iter[V]) -> T::With[C]:
     it.try_process(|i| i.collect[C]())
 
 # Numbers
@@ -52,7 +52,7 @@ fn sum[V -> Acc: Zero + AddAssign[V] = V](it: Iter[V]) -> Acc:
         result += value
     result
 
-fn try_sum[V, T: Try[V] -> Acc: Zero + AddAssign[V] = V](it: Iter[T]) -> T::AsTry[Acc]:
+fn try_sum[V, T: Try[V] -> Acc: Zero + AddAssign[V] = V](it: Iter[T]) -> T::With[Acc]:
     it.try_process(|i| i.sum[Acc]())
 
 trait CheckAdd[V]:
@@ -79,7 +79,7 @@ fn join[V -> Acc: Empty + AddAssign[V] = V](it: Iter[V]) -> Acc:
         result += value
     result
 
-fn try_join[V, T: Try[V] -> Acc: Empty + AddAssign[V] = V](it: Iter[T]) -> T::AsTry[Acc]:
+fn try_join[V, T: Try[V] -> Acc: Empty + AddAssign[V] = V](it: Iter[T]) -> T::With[Acc]:
     it.try_process(|i| i.join[Acc]())
 
 # TODO: Overload priority.
@@ -87,7 +87,7 @@ fn try_join[V, T: Try[V] -> Acc: Empty + AddAssign[V] = V](it: Iter[T]) -> T::As
 # TODO: Other immutable types also need an intermediate buffer. Can this
 # pattern be generalized?
 fn join(it: Iter[Str]) -> Str:
-    StrBuf::from(it).into_str()
+    StrBuf::from(it).move_to_str()
 
 fn try_join[T: Try[Str]](it: Iter[T]) -> T:
     it.try_process(|i| i.join())

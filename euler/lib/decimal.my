@@ -1,6 +1,6 @@
 @[opaque]
 struct Decimal:
-    digits: FrozenList[Int8]
+    digits: Span[Int8]
 
     @[implicit]
     static fn from(value: Int) -> Self:
@@ -12,18 +12,18 @@ struct Decimal:
             value, digit = value.div_mod(10)
             result_digits.append(digit)
 
-        Self(result_digits.into_frozen_list())
+        Self(result_digits.move_to_span())
 
     static fn zero() -> Self:
-        Self(FrozenList[Int8]::empty())
+        Self(Span[Int8]::empty())
 
     @[rel(parse)]
     static fn try_parse(digits: Bytes) -> Self?:
         result_digits = List[Int8]::empty()
-        for byte in digits.lstrip('0'b).rev():
+        for byte in digits.lstrip('0').rev():
             result_digits.append(Int8::try_parse(byte)?)
 
-        Some(Self(result_digits.into_frozen_list()))
+        Some(Self(result_digits.move_to_span()))
 
     @[panics, rel(try_parse)]
     static fn parse(digits: Bytes) -> Self:
@@ -53,7 +53,7 @@ struct Decimal:
             expect carry == 1_i8
             result_digits.append(carry)
 
-        Self(result_digits.into_frozen_list())
+        Self(result_digits.move_to_span())
 
     static fn shr(a: Self, b: Int) -> Self:
         # TODO: Should negative shifts be supported?
@@ -63,20 +63,20 @@ struct Decimal:
         Self(a.digits.slice(b))
 
     @[implicit]
-    fn as_bool() -> Bool:
+    fn to_bool() -> Bool:
         self.digits.len()
 
     fn len() -> Int:
         self.digits.len()
 
-    @[rel(as_int)]
-    fn try_as_int() -> Int?:
+    @[rel(to_int)]
+    fn try_to_int() -> Int?:
         result = 0
         for digit in self.digits.rev():
             # TODO: Is it faster to compare the value up front?
             result = 10.check_mul(result)?.check_add(digit)?
         Some(result)
 
-    @[panics, rel(try_as_int)]
-    fn as_int() -> Int:
-        self.try_as_int().expect()
+    @[panics, rel(try_to_int)]
+    fn to_int() -> Int:
+        self.try_to_int().expect()

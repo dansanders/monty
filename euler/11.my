@@ -4,7 +4,7 @@ _data = embed_bytes("data/11.txt")
 
 fn solve(data: Bytes, N: Int) -> Int:
     fn parse_line(line: Bytes) -> Iter[Int8]:
-        line.split().map(Int8.parse)
+        line.split().map(Int8::parse)
 
     # TODO: 2D array construction syntax.
     grid = NDArray::from(data.lines().map(parse_line), 20, 20)
